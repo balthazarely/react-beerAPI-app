@@ -8,6 +8,7 @@ import Axios from "axios";
 
 import { convertToNum } from "./_utility";
 import ResultsContainer from "./ResultsContainer";
+import BreweryCard from "./BreweryCard";
 
 // Styles
 import styles from "./Search.module.css";
@@ -25,7 +26,6 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     padding: theme.spacing(2),
-    // textAlign: "center",
     color: theme.palette.text.secondary,
   },
 }));
@@ -49,6 +49,7 @@ export default function App(props) {
     zoom: 3,
   });
   const [selectedBrew, setSelectedBrew] = useState("");
+  const [breweryCard, setBreweryCard] = useState({});
 
   const handleSelect = async (value) => {
     const results = await geocodeByAddress(value);
@@ -79,13 +80,16 @@ export default function App(props) {
   };
 
   const getClickedCard = (data) => {
-    console.log(data);
-    if (isNaN(data.lat) || isNaN(data.lng)) {
+    setBreweryCard(data);
+    if (
+      isNaN(convertToNum(data.latitude)) ||
+      isNaN(convertToNum(data.longitude))
+    ) {
       return;
     } else {
       setViewPort({
-        latitude: data.lat,
-        longitude: data.lng,
+        latitude: convertToNum(data.latitude),
+        longitude: convertToNum(data.longitude),
         width: "100%",
         height: "100%h",
         zoom: 14,
@@ -104,7 +108,7 @@ export default function App(props) {
                 style={{
                   backgroundColor: "white",
                   position: "absolute",
-                  top: "100px",
+                  top: "150px",
                   zIndex: "100",
                   margin: "10px",
                   padding: "10px",
@@ -126,13 +130,15 @@ export default function App(props) {
                     <div>
                       <div className={styles.searchContainer}>
                         <TextField
-                          label="Type City"
+                          label="Search City"
                           variant="outlined"
                           size="small"
                           {...getInputProps({})}
                           style={{ width: 250 }}
                         />
+
                         <Button onClick={handleSearch}>Search</Button>
+                        <div id="error"></div>
                       </div>
                       <div>
                         {/* {loading ? <div>...loading</div> : null} */}
@@ -227,6 +233,14 @@ export default function App(props) {
               <ResultsContainer
                 brewery={brewries}
                 getClickedCard={getClickedCard}
+              />
+            </Paper>
+          </Grid>
+          <Grid item xs={12} md={12}>
+            <Paper className={classes.paper}>
+              <BreweryCard
+                breweryCard={breweryCard}
+                addToFavorites={props.addToFavorites}
               />
             </Paper>
           </Grid>

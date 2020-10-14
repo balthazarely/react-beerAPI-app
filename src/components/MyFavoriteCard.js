@@ -23,29 +23,18 @@ const useStyles = makeStyles({
   },
 });
 
-export default function ResultCard(props) {
+export default function MyFavoriteCard(props) {
   const classes = useStyles();
-  const bull = <span className={classes.bullet}>•</span>;
-
-  const convertToNum = (string) => {
-    let number = parseFloat(string);
-    let rounded = number;
-    return parseFloat(rounded);
-  };
 
   return (
-    <Card
-      className={classes.root}
-      variant="outlined"
-      onClick={() => props.getClickedCard(props.brew)}
-    >
+    <Card className={classes.root} variant="outlined">
       <CardActionArea>
         <CardContent>
           <Typography variant="h6" component="h3">
-            {props.brew.name}
+            {props.favorite.name}
           </Typography>
           <Typography className={classes.pos} color="textSecondary">
-            {props.brew.brewery_type}
+            something else
           </Typography>
         </CardContent>
       </CardActionArea>

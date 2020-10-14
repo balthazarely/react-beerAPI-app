@@ -27,7 +27,14 @@ export default function ResultsContainer(props) {
       {renderAuthButton()}
 
       {props.brewery.map((brew) => {
-        return <ResultCard brew={brew} getClickedCard={props.getClickedCard} />;
+        return (
+          <ResultCard
+            brew={brew}
+            getClickedCard={props.getClickedCard}
+            id={brew.id}
+            key={brew.id}
+          />
+        );
       })}
     </div>
   );
