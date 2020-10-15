@@ -56,7 +56,6 @@ const useStyles = makeStyles((theme) => ({
 export default function MainLayout() {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
-  const [clickedCoordinates, setClickedCoordinates] = React.useState(0);
   const [favorites, setFavorites] = React.useState([
     {
       brewery_type: "micro",
@@ -130,42 +129,37 @@ export default function MainLayout() {
   };
 
   const removeFavorite = (itemId) => {
-    setData(data.filter(({ id }) => id !== itemId));
+    console.log(itemId);
+    console.log("whats good");
+    setfilteredFavorites(filteredFavorites.filter(({ id }) => id !== itemId));
     // to go back, just change setFilteredFav and filteredFav to fav, setFav
   };
 
   // Filter Stuff
-   const [searchText, setSearchText] = useState("");
-  const [data, setData] = useState();
- 
-  // exclude column list from filter
-  const excludeColumns = ["id", "color"];
- 
-  // handle change event of search input
-  const handleFilterInput = e => {
-    let term = e.target.value.toLowerCase()
-    setSearchText(term)
-    filterData(term);
-  };
- 
-  // filter records by search text
-  const filterData = (value) => {
-    const lowercasedValue = value.toLowerCase().trim();
-    if (lowercasedValue === "") setData(favorites);
-    else {
-      const filteredData = favorites.filter(item => {
-        return Object.keys(item).some(key =>
-          excludeColumns.includes(key) ? false : item[key].toString().toLowerCase().includes(lowercasedValue)
-        );
-      });
-      setData(filteredData);
+    const [serachTerm, setSerachTerm] = useState('')
+    const [filteredFavorites, setfilteredFavorites ] = useState([])
+
+    const handleFilterInput = (e) => {
+        let value = e.target.value.toLowerCase()
+        setSerachTerm(value)
     }
-  }
+
+    const filterByName = () => {
+      let filtered =  favorites.filter(brew => {
+       return brew.name.toLowerCase().includes(serachTerm)
+
+      })
+      return filtered
+    }
 
     useEffect(() => {
-        setData(favorites)
-    }, [favorites])
+      console.log("Effect is here");
+          setfilteredFavorites(filterByName)
+          console.log(filterByName);
+    }, [serachTerm, favorites])
 
+
+ 
 
   return (
     <div className={classes.root}>
@@ -185,7 +179,7 @@ export default function MainLayout() {
       </TabPanel>
       <TabPanel value={value} index={1}>
         <FilterPanel handleFilterInput={handleFilterInput} />
-        <MyFavorites favorites={data} removeFavorite={removeFavorite} />
+        <MyFavorites favorites={filteredFavorites} removeFavorite={removeFavorite} />
       </TabPanel>
       <TabPanel value={value} index={2}>
         <About />

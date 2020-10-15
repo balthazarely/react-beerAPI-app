@@ -25,16 +25,20 @@ const useStyles = makeStyles({
 
 export default function MyFavoriteCard(props) {
   const classes = useStyles();
-
   return (
     <Card className={classes.root} variant="outlined">
-      <CardActionArea>
+      <CardActionArea
+        onDoubleClick={() => props.removeFavorite(props.favorite.id)}
+      >
         <CardContent>
           <Typography variant="h6" component="h3">
             {props.favorite.name}
           </Typography>
           <Typography className={classes.pos} color="textSecondary">
-            something else
+            {props.favorite.state}
+          </Typography>
+          <Typography className={classes.pos} color="textSecondary">
+            {props.favorite.brewery_type}
           </Typography>
         </CardContent>
       </CardActionArea>

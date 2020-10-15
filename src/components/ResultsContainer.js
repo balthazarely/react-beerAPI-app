@@ -21,7 +21,6 @@ export default function ResultsContainer(props) {
       );
     }
   };
-  console.log(props.brewery.length);
   return (
     <div style={{ height: "500px", overflow: "hidden", overflowY: "scroll" }}>
       {renderAuthButton()}

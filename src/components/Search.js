@@ -68,7 +68,6 @@ export default function App(props) {
     Axios.get(url).then((res) => {
       setBrewries(res.data);
     });
-    // setCoordinates(tempCoordinates);
     setViewPort({
       latitude: tempCoordinates.lat,
       longitude: tempCoordinates.lng,
@@ -76,7 +75,6 @@ export default function App(props) {
       height: "100%",
       zoom: 12,
     });
-    console.log(brewries);
   };
 
   const getClickedCard = (data) => {
@@ -205,6 +203,7 @@ export default function App(props) {
                             onClick={(e) => {
                               e.preventDefault();
                               setSelectedBrew(brew);
+                              console.log("i clicked", brew);
                             }}
                           >
                             <img src="beer.svg" />
