@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-import SingelBrewInput from "./SingleBrewInput";
-import SingleBrewList from "./SingleBrewList";
-import SingleBrewMap from "./SingleBrewMap";
+import LocationBrewInput from "./LocationBrewInput";
+import LocationBrewList from "./LocationBrewList";
+import LocationBrewMap from "./LocationBrewMap";
 import Pagination from "./Pagination";
 import { Container, Grid } from "semantic-ui-react";
 import Axios from "axios";
 import { convertToNum } from "../Utility/_utility";
 
-export default function SingleBrewSearchPage() {
+export default function LocationBrewSearchPage() {
   const [brewery, setBewery] = useState([]);
   const [searchTerm, setSearchTerm] = useState("Red");
   // Default Viewport for Map
@@ -72,10 +72,10 @@ export default function SingleBrewSearchPage() {
 
   return (
     <Container>
-      <SingelBrewInput setSearchTerm={setSearchTerm} />
+      <LocationBrewInput setSearchTerm={setSearchTerm} />
       <Grid stackable columns={2}>
         <Grid.Column>
-          <SingleBrewList
+          <LocationBrewList
             brewery={currentPost}
             handleBreweryListClick={handleBreweryListClick}
           />
@@ -86,7 +86,7 @@ export default function SingleBrewSearchPage() {
           />
         </Grid.Column>
         <Grid.Column>
-          <SingleBrewMap
+          <LocationBrewMap
             brewery={brewery}
             setViewPort={setViewPort}
             viewport={viewport}

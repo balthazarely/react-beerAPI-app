@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Search from "./BeerMap/Search";
+import LocationBrewSearchPage from "./LocationBeerSearch/LocationBrewSearchPage";
 import MyFavorites from "./Favorites/MyFavorites";
 import NavBar from "./Navbar";
 import FilterPanel from "./Favorites/FilterPanel";

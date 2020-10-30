@@ -1,13 +1,31 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { Grid, Container } from "semantic-ui-react";
+import SingleBeerPageHeader from "./SingleBeerPageHeader";
+import Axios from "axios";
 
 export default function SingleBeerPage({ match }) {
-  //   useEffect(() => {
-  //     let url = `https://api.openbrewerydb.org/breweries/666`;
-  //     Axios.get(url).then((res) => {
-  //       console.log(res.data);
-  //     });
-  //   });
+  const [brewery, setBrewery] = useState({});
 
-  console.log(match);
-  return <div>this is a single beer page {match.params.id}</div>;
+  useEffect(() => {
+    let url = `https://api.openbrewerydb.org/breweries/${match.params.id}`;
+    Axios.get(url).then((res) => {
+      console.log(res.data);
+      setBrewery(res.data);
+    });
+  }, []);
+
+  return (
+    <Container>
+      <Grid>
+        <Grid.Column width={10}>
+          <SingleBeerPageHeader brewery={brewery} />
+          {/* <EventDetailedInfo event={event} /> */}
+          {/* <EventDetailedChat /> */}
+        </Grid.Column>
+        <Grid.Column width={6}>
+          {/* <EventDetailedSidebar attendees={event.attendees} /> */}
+        </Grid.Column>
+      </Grid>
+    </Container>
+  );
 }
