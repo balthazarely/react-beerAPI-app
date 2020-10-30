@@ -1,7 +1,7 @@
-import React, {useState, useEffect} from "react";
- 
+import React, { useState, useEffect } from "react";
+
 function App() {
- const [favorites, setFavorites] = useState([
+  const [favorites, setFavorites] = useState([
     {
       brewery_type: "micro",
       city: "Wasilla",
@@ -64,66 +64,71 @@ function App() {
     },
   ]);
 
-
- 
   const [searchText, setSearchText] = useState("");
   const [data, setData] = useState();
- 
+
   // exclude column list from filter
   const excludeColumns = ["id", "color"];
- 
+
   // handle change event of search input
-  const handleFilterInput = value => {
+  const handleFilterInput = (value) => {
     setSearchText(value);
     filterData(value);
   };
- 
+
   // filter records by search text
   const filterData = (value) => {
     const lowercasedValue = value.toLowerCase().trim();
     if (lowercasedValue === "") setData(favorites);
     else {
-      const filteredData = favorites.filter(item => {
-        return Object.keys(item).some(key =>
-          excludeColumns.includes(key) ? false : item[key].toString().toLowerCase().includes(lowercasedValue)
+      const filteredData = favorites.filter((item) => {
+        return Object.keys(item).some((key) =>
+          excludeColumns.includes(key)
+            ? false
+            : item[key].toString().toLowerCase().includes(lowercasedValue)
         );
       });
       setData(filteredData);
     }
-  }
+  };
 
+  useEffect(() => {
+    setData(favorites);
+  }, []);
 
-    useEffect(() => {
-        setData(favorites)
-    }, [])
-
-
- 
- 
   return (
     <div className="App">
-      Search: <input
+      Search:{" "}
+      <input
         style={{ marginLeft: 5 }}
         type="text"
         placeholder="Type to search..."
         value={searchText}
-        onChange={e => handleFilterInput(e.target.value)}
+        onChange={(e) => handleFilterInput(e.target.value)}
       />
       <div className="box-container">
-        {data && data.map((d, i) => {
-          return <div key={i} className="box" style={{ backgroundColor: d.color }}>
-            <b>Name: </b>{d.name}<br />
-             <b>city: </b>{d.city}<br />
-              <b>state: </b>{d.state}<br />
-              <br/>
-       
-          </div>
-        })}
+        {data &&
+          data.map((d, i) => {
+            return (
+              <div key={i} className="box" style={{ backgroundColor: d.color }}>
+                <b>Name: </b>
+                {d.name}
+                <br />
+                <b>city: </b>
+                {d.city}
+                <br />
+                <b>state: </b>
+                {d.state}
+                <br />
+                <br />
+              </div>
+            );
+          })}
         <div className="clearboth"></div>
         {/* {data.length === 0 && <span>No records found to display!</span>} */}
       </div>
     </div>
   );
 }
- 
+
 export default App;

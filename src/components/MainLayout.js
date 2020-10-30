@@ -1,60 +1,12 @@
-import React, {useState, useEffect} from "react";
-import PropTypes from "prop-types";
-import { makeStyles } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Container from "@material-ui/core/Container";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
-import Typography from "@material-ui/core/Typography";
-import Box from "@material-ui/core/Box";
-import Search from "./Search";
-import MyFavorites from "./MyFavorites";
-import FilterPanel from './FilterPanel'
-import About from './About'
-
-
-
-function TabPanel(props) {
-  const { children, value, index, classes, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Container>
-          <Box>{children}</Box>
-        </Container>
-      )}
-    </div>
-  );
-}
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.any.isRequired,
-  value: PropTypes.any.isRequired,
-};
-
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
-}
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    backgroundColor: theme.palette.background.paper,
-  },
-}));
+import React, { useState, useEffect } from "react";
+import Search from "./BeerMap/Search";
+import MyFavorites from "./Favorites/MyFavorites";
+import NavBar from "./Navbar";
+import FilterPanel from "./Favorites/FilterPanel";
+import About from "./About";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 export default function MainLayout() {
-  const classes = useStyles();
   const [value, setValue] = React.useState(0);
   const [clickedCoordinates, setClickedCoordinates] = React.useState(0);
   const [favorites, setFavorites] = React.useState([
@@ -120,10 +72,6 @@ export default function MainLayout() {
     },
   ]);
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
   const addToFavorites = (obj) => {
     console.log(obj);
     setFavorites([...favorites, obj]);
@@ -135,62 +83,56 @@ export default function MainLayout() {
   };
 
   // Filter Stuff
-   const [searchText, setSearchText] = useState("");
+  const [searchText, setSearchText] = useState("");
   const [data, setData] = useState();
- 
+
   // exclude column list from filter
   const excludeColumns = ["id", "color"];
- 
+
   // handle change event of search input
-  const handleFilterInput = e => {
-    let term = e.target.value.toLowerCase()
-    setSearchText(term)
+  const handleFilterInput = (e) => {
+    let term = e.target.value.toLowerCase();
+    setSearchText(term);
     filterData(term);
   };
- 
+
   // filter records by search text
   const filterData = (value) => {
     const lowercasedValue = value.toLowerCase().trim();
     if (lowercasedValue === "") setData(favorites);
     else {
-      const filteredData = favorites.filter(item => {
-        return Object.keys(item).some(key =>
-          excludeColumns.includes(key) ? false : item[key].toString().toLowerCase().includes(lowercasedValue)
+      const filteredData = favorites.filter((item) => {
+        return Object.keys(item).some((key) =>
+          excludeColumns.includes(key)
+            ? false
+            : item[key].toString().toLowerCase().includes(lowercasedValue)
         );
       });
       setData(filteredData);
     }
-  }
+  };
 
-    useEffect(() => {
-        setData(favorites)
-    }, [favorites])
-
+  useEffect(() => {
+    setData(favorites);
+  }, [favorites]);
 
   return (
-    <div className={classes.root}>
-      <AppBar position="static">
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          aria-label="simple tabs example"
-        >
-          <Tab label="Beer Map" {...a11yProps(0)} />
-          <Tab label="Favorites" {...a11yProps(1)} />
-          <Tab label="About" {...a11yProps(2)} />
-        </Tabs>
-      </AppBar>
-      <TabPanel value={value} index={0}>
-        <Search addToFavorites={addToFavorites} />
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        <FilterPanel handleFilterInput={handleFilterInput} />
-        <MyFavorites favorites={data} removeFavorite={removeFavorite} />
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-        <About />
-        
-      </TabPanel>
-    </div>
+    <Router>
+      <NavBar />
+      <Switch>
+        <div style={{ paddingTop: "50px" }}>
+          <Route exact path="/">
+            <Search addToFavorites={addToFavorites} />
+          </Route>
+          <Route exact path="/favorites">
+            <FilterPanel handleFilterInput={handleFilterInput} />
+            <MyFavorites favorites={data} removeFavorite={removeFavorite} />
+          </Route>
+          <Route exact path="/about">
+            <About />
+          </Route>
+        </div>
+      </Switch>
+    </Router>
   );
 }

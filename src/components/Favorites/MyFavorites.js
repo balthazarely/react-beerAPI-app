@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import MyFavoriteCard from "./MyFavoriteCard";
 import Paper from "@material-ui/core/Paper";
@@ -24,7 +24,6 @@ const useStyles = makeStyles({
   },
 });
 
-
 export default function MyFavorites(props) {
   const classes = useStyles();
 
@@ -33,21 +32,22 @@ export default function MyFavorites(props) {
       <Grid container spacing={3}>
         <Grid item xs={12} md={8}>
           <Paper className={classes.paper}>
-            {props.favorites.map((x) => {
-              return (
-                <MyFavoriteCard
-                  favorite={x}
-                  key={x.id}
-                  removeFavorite={props.removeFavorite}
-                  clickedCard={props.clickedCard}
-                />
-              );
-            })}
+            {props.favorites &&
+              props.favorites.map((x) => {
+                return (
+                  <MyFavoriteCard
+                    favorite={x}
+                    key={x.id}
+                    removeFavorite={props.removeFavorite}
+                    clickedCard={props.clickedCard}
+                  />
+                );
+              })}
           </Paper>
         </Grid>
         <Grid item xs={12} md={4}>
           <Paper className={classes.paper}>
-            <MyFavoriteMap favorites={props.favorites}  />
+            <MyFavoriteMap favorites={props.favorites} />
           </Paper>
         </Grid>
       </Grid>

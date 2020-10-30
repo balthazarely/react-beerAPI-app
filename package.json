@@ -12,6 +12,7 @@
     "@types/react-places-autocomplete": "^7.2.6",
     "@urbica/react-map-gl-cluster": "^0.2.0",
     "axios": "^0.20.0",
+    "firebase": "^7.24.0",
     "google-maps-react": "^2.0.6",
     "node-sass": "^4.14.1",
     "react": "^16.13.1",
@@ -20,7 +21,10 @@
     "react-google-maps": "^9.4.5",
     "react-map-gl": "^5.2.9",
     "react-places-autocomplete": "^7.3.0",
-    "react-scripts": "3.4.3"
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "3.4.3",
+    "semantic-ui-css": "^2.4.1",
+    "semantic-ui-react": "^2.0.1"
   },
   "scripts": {
     "start": "react-scripts start",

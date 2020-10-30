@@ -6,7 +6,7 @@ import PlacesAutocomplete, {
 import ReactMapGL, { Marker, Popup } from "react-map-gl";
 import Axios from "axios";
 
-import { convertToNum } from "./_utility";
+import { convertToNum } from "../Utility/_utility";
 import ResultsContainer from "./ResultsContainer";
 import BreweryCard from "./BreweryCard";
 
@@ -106,7 +106,7 @@ export default function App(props) {
                 style={{
                   backgroundColor: "white",
                   position: "absolute",
-                  top: "150px",
+                  top: "100px",
                   zIndex: "100",
                   margin: "10px",
                   padding: "10px",

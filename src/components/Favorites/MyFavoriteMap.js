@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ReactMapGL, { Marker, Popup } from "react-map-gl";
-import { convertToNum } from "./_utility";
+import { convertToNum } from "../Utility/_utility";
 
 export default function FavoriteMap(props) {
   const [viewport, setViewPort] = useState({
@@ -25,36 +25,37 @@ export default function FavoriteMap(props) {
         }}
         style={{ position: "absolute", height: "100%" }}
       >
-        {props.favorites.map((brew) => {
-          if (brew.latitude === null || brew.longitude === null) {
-            return;
-          } else {
-            return (
-              <Marker
-                key={brew.id}
-                latitude={convertToNum(brew.latitude)}
-                longitude={convertToNum(brew.longitude)}
-              >
-                <button
-                  style={{
-                    background: "none",
-                    border: "none",
-                    width: "40px",
-                    height: "50px",
-                    cursor: "pointer",
-                    outline: "none",
-                  }}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setSelectedBrew(brew);
-                  }}
+        {props.favorites &&
+          props.favorites.map((brew) => {
+            if (brew.latitude === null || brew.longitude === null) {
+              return;
+            } else {
+              return (
+                <Marker
+                  key={brew.id}
+                  latitude={convertToNum(brew.latitude)}
+                  longitude={convertToNum(brew.longitude)}
                 >
-                  <img src="beer.svg" />
-                </button>
-              </Marker>
-            );
-          }
-        })}
+                  <button
+                    style={{
+                      background: "none",
+                      border: "none",
+                      width: "40px",
+                      height: "50px",
+                      cursor: "pointer",
+                      outline: "none",
+                    }}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setSelectedBrew(brew);
+                    }}
+                  >
+                    <img src="beer.svg" />
+                  </button>
+                </Marker>
+              );
+            }
+          })}
         {selectedBrew ? (
           <Popup
             latitude={convertToNum(selectedBrew.latitude)}
