@@ -1,47 +1,22 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import CardActionArea from "@material-ui/core/CardActionArea";
-import Typography from "@material-ui/core/Typography";
-
-const useStyles = makeStyles({
-  root: {
-    minWidth: 275,
-    align: "right",
-  },
-  bullet: {
-    display: "inline-block",
-    margin: "0 2px",
-    transform: "scale(0.8)",
-  },
-  title: {
-    fontSize: 14,
-  },
-  pos: {
-    marginBottom: 12,
-  },
-});
+import { Header, Image, Table, Button } from "semantic-ui-react";
+import { Link } from "react-router-dom";
 
 export default function MyFavoriteCard(props) {
-  const classes = useStyles();
+  // onDoubleClick={() => props.removeFavorite(props.favorite.id)}
+
   return (
-    <Card className={classes.root} variant="outlined">
-      <CardActionArea
-        onDoubleClick={() => props.removeFavorite(props.favorite.id)}
-      >
-        <CardContent>
-          <Typography variant="h6" component="h3">
+    <Table.Row fluid>
+      <Table.Cell selectable>
+        <Header as="h4" image>
+          <Image src="/beer.svg" rounded size="mini" />
+          <Header.Content as={Link} to={`/brewery/${props.favorite.id}`}>
             {props.favorite.name}
-          </Typography>
-          <Typography className={classes.pos} color="textSecondary">
-            {props.favorite.state}
-          </Typography>
-          <Typography className={classes.pos} color="textSecondary">
-            {props.favorite.brewery_type}
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-    </Card>
+            <Header.Subheader> {props.favorite.brewery_type}</Header.Subheader>
+          </Header.Content>
+        </Header>
+      </Table.Cell>
+      <Table.Cell>{props.favorite.state}</Table.Cell>
+    </Table.Row>
   );
 }

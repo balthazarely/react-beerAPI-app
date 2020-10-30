@@ -4,7 +4,9 @@ import MyFavorites from "./Favorites/MyFavorites";
 import NavBar from "./Navbar";
 import FilterPanel from "./Favorites/FilterPanel";
 import About from "./About";
+import SingleBeerPage from "./SingleBeerPage/SingleBeerPage";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import SingleBrewSearchPage from "./SingleBrewSearch/SingleBrewSearchPage";
 
 export default function MainLayout() {
   const [value, setValue] = React.useState(0);
@@ -119,20 +121,34 @@ export default function MainLayout() {
   return (
     <Router>
       <NavBar />
-      <Switch>
-        <div style={{ paddingTop: "50px" }}>
-          <Route exact path="/">
-            <Search addToFavorites={addToFavorites} />
-          </Route>
-          <Route exact path="/favorites">
-            <FilterPanel handleFilterInput={handleFilterInput} />
-            <MyFavorites favorites={data} removeFavorite={removeFavorite} />
-          </Route>
-          <Route exact path="/about">
-            <About />
-          </Route>
-        </div>
-      </Switch>
+      <div style={{ marginTop: "60px" }}>
+        <Switch>
+          <>
+            <Route exact path="/">
+              <Search addToFavorites={addToFavorites} />
+            </Route>
+            <Route exact path="/singleBrewSearch">
+              <SingleBrewSearchPage />
+            </Route>
+            <Route exact path="/favorites">
+              {/* <FilterPanel handleFilterInput={handleFilterInput} /> */}
+              <MyFavorites
+                favorites={data}
+                removeFavorite={removeFavorite}
+                handleFilterInput={handleFilterInput}
+              />
+            </Route>
+            <Route exact path="/about">
+              <About />
+            </Route>
+            <Route
+              exact
+              path={["/brewery/:id"]}
+              component={SingleBeerPage}
+            ></Route>
+          </>
+        </Switch>
+      </div>
     </Router>
   );
 }

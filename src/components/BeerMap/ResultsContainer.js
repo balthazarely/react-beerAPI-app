@@ -26,7 +26,7 @@ export default function ResultsContainer(props) {
     <div style={{ height: "500px", overflow: "hidden", overflowY: "scroll" }}>
       {renderAuthButton()}
 
-      <Table basic="very" celled collapsing>
+      <Table basic="very" fixed celled collapsing padded>
         <Table.Body>
           {props.brewery.map((brew) => {
             return (

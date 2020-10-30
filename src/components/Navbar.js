@@ -6,7 +6,14 @@ export default function Nav({ setFormOpen }) {
   return (
     <Menu inverted fixed="top">
       <Container>
-        <Menu.Item name="FindBeer" header as={NavLink} exact to="/" />
+        <Menu.Item name="CitySearch" header as={NavLink} exact to="/" />
+        <Menu.Item
+          name="BrewerySearch"
+          header
+          as={NavLink}
+          exact
+          to="/singleBrewSearch"
+        />
         <Menu.Item name="Favorites" header as={NavLink} exact to="/favorites" />
       </Container>
     </Menu>

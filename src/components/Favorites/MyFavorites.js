@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import MyFavoriteCard from "./MyFavoriteCard";
-import Paper from "@material-ui/core/Paper";
-import Grid from "@material-ui/core/Grid";
-import Container from "@material-ui/core/Container";
+import { Grid, Container, Card, Table } from "semantic-ui-react";
+import FilterPanel from "./FilterPanel";
+
 import MyFavoriteMap from "./MyFavoriteMap";
 
 const useStyles = makeStyles({
@@ -29,27 +29,32 @@ export default function MyFavorites(props) {
 
   return (
     <Container style={{ marginTop: "20px" }}>
-      <Grid container spacing={3}>
-        <Grid item xs={12} md={8}>
-          <Paper className={classes.paper}>
-            {props.favorites &&
-              props.favorites.map((x) => {
-                return (
-                  <MyFavoriteCard
-                    favorite={x}
-                    key={x.id}
-                    removeFavorite={props.removeFavorite}
-                    clickedCard={props.clickedCard}
-                  />
-                );
-              })}
-          </Paper>
-        </Grid>
-        <Grid item xs={12} md={4}>
-          <Paper className={classes.paper}>
+      <Grid stackable columns={2}>
+        <Grid.Column width={10}>
+          <FilterPanel handleFilterInput={props.handleFilterInput} />
+          <Card fluid className={classes.paper}>
+            <Table basic="very" celled collapsing>
+              <Table.Body>
+                {props.favorites &&
+                  props.favorites.map((x) => {
+                    return (
+                      <MyFavoriteCard
+                        favorite={x}
+                        key={x.id}
+                        removeFavorite={props.removeFavorite}
+                        clickedCard={props.clickedCard}
+                      />
+                    );
+                  })}
+              </Table.Body>
+            </Table>
+          </Card>
+        </Grid.Column>
+        <Grid.Column width={6}>
+          <Card fluid className={classes.paper}>
             <MyFavoriteMap favorites={props.favorites} />
-          </Paper>
-        </Grid>
+          </Card>
+        </Grid.Column>
       </Grid>
     </Container>
   );

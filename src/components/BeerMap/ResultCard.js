@@ -6,7 +6,7 @@ export default function ResultCard(props) {
   let brewName = truncateText(props.brew.name, 50);
 
   return (
-    <Table.Row fluid>
+    <Table.Row>
       <Table.Cell selectable>
         <Header as="h4" image>
           <Image src="/beer.svg" rounded size="mini" />
