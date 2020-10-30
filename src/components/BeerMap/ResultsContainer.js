@@ -1,5 +1,6 @@
 import React from "react";
 import ResultCard from "./ResultCard";
+import { Card, Icon, Image, Table } from "semantic-ui-react";
 
 export default function ResultsContainer(props) {
   const renderAuthButton = () => {
@@ -25,16 +26,20 @@ export default function ResultsContainer(props) {
     <div style={{ height: "500px", overflow: "hidden", overflowY: "scroll" }}>
       {renderAuthButton()}
 
-      {props.brewery.map((brew) => {
-        return (
-          <ResultCard
-            brew={brew}
-            getClickedCard={props.getClickedCard}
-            id={brew.id}
-            key={brew.id}
-          />
-        );
-      })}
+      <Table basic="very" celled collapsing>
+        <Table.Body>
+          {props.brewery.map((brew) => {
+            return (
+              <ResultCard
+                brew={brew}
+                getClickedCard={props.getClickedCard}
+                id={brew.id}
+                key={brew.id}
+              />
+            );
+          })}
+        </Table.Body>
+      </Table>
     </div>
   );
 }

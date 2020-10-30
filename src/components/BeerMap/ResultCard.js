@@ -1,54 +1,22 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import CardActionArea from "@material-ui/core/CardActionArea";
-import Typography from "@material-ui/core/Typography";
-
-const useStyles = makeStyles({
-  root: {
-    minWidth: 275,
-    align: "right",
-  },
-  bullet: {
-    display: "inline-block",
-    margin: "0 2px",
-    transform: "scale(0.8)",
-  },
-  title: {
-    fontSize: 14,
-  },
-  pos: {
-    marginBottom: 12,
-  },
-});
+import { Header, Image, Table } from "semantic-ui-react";
+import { truncateText } from "../Utility/_utility";
 
 export default function ResultCard(props) {
-  const classes = useStyles();
-  const bull = <span className={classes.bullet}>•</span>;
-
-  const convertToNum = (string) => {
-    let number = parseFloat(string);
-    let rounded = number;
-    return parseFloat(rounded);
-  };
+  let brewName = truncateText(props.brew.name, 50);
 
   return (
-    <Card
-      className={classes.root}
-      variant="outlined"
-      onClick={() => props.getClickedCard(props.brew)}
-    >
-      <CardActionArea>
-        <CardContent>
-          <Typography variant="h6" component="h3">
-            {props.brew.name}
-          </Typography>
-          <Typography className={classes.pos} color="textSecondary">
-            {props.brew.brewery_type}
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-    </Card>
+    <Table.Row fluid>
+      <Table.Cell selectable>
+        <Header as="h4" image>
+          <Image src="/beer.svg" rounded size="mini" />
+          <Header.Content onClick={() => props.getClickedCard(props.brew)}>
+            {brewName}
+            <Header.Subheader>{props.brew.brewery_type}</Header.Subheader>
+          </Header.Content>
+        </Header>
+      </Table.Cell>
+      <Table.Cell>22</Table.Cell>
+    </Table.Row>
   );
 }

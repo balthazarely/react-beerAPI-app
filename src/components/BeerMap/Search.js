@@ -12,11 +12,15 @@ import BreweryCard from "./BreweryCard";
 
 // Styles
 import styles from "./Search.module.css";
+import { Grid, Image } from "semantic-ui-react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
-import Grid from "@material-ui/core/Grid";
+// import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
+import { Input, Card } from "semantic-ui-react";
+
+import { Button } from "semantic-ui-react";
+
 import Container from "@material-ui/core/Container";
 
 const useStyles = makeStyles((theme) => ({
@@ -98,15 +102,15 @@ export default function App(props) {
   return (
     <div className={classes.root}>
       <Container>
-        <Grid container spacing={3}>
-          <Grid item xs={12} md={8}>
-            <Paper className={classes.paper}>
+        <Grid stackable columns={2}>
+          <Grid.Column width={10}>
+            <Card fluid className={classes.paper}>
               <div
                 className="search-container"
                 style={{
                   backgroundColor: "white",
                   position: "absolute",
-                  top: "100px",
+                  top: "0px",
                   zIndex: "100",
                   margin: "10px",
                   padding: "10px",
@@ -127,9 +131,9 @@ export default function App(props) {
                   }) => (
                     <div>
                       <div className={styles.searchContainer}>
-                        <TextField
-                          label="Search City"
+                        <Input
                           variant="outlined"
+                          placeholder="search city"
                           size="small"
                           {...getInputProps({})}
                           style={{ width: 250 }}
@@ -225,24 +229,24 @@ export default function App(props) {
                   ) : null}
                 </ReactMapGL>
               </div>
-            </Paper>
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <Paper className={classes.paper}>
+            </Card>
+          </Grid.Column>
+          <Grid.Column width={6}>
+            <Card fluid className={classes.paper}>
               <ResultsContainer
                 brewery={brewries}
                 getClickedCard={getClickedCard}
               />
-            </Paper>
-          </Grid>
-          <Grid item xs={12} md={12}>
+            </Card>
+          </Grid.Column>
+          {/* <Grid item xs={12} md={12}>
             <Paper className={classes.paper}>
               <BreweryCard
                 breweryCard={breweryCard}
                 addToFavorites={props.addToFavorites}
               />
             </Paper>
-          </Grid>
+          </Grid> */}
         </Grid>
       </Container>
     </div>
