@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Button, Icon, Grid } from "semantic-ui-react";
+import { Card, Image, Icon, Grid } from "semantic-ui-react";
 
 export default function SingleBrewListItem({
   brewery,
@@ -7,19 +7,27 @@ export default function SingleBrewListItem({
 }) {
   return (
     <Grid.Column>
-      <Card fluid>
-        <Card.Content header={brewery.name} />
-        <Card.Content description={brewery.city} />
-        <Card.Content extra>
-          <a>
-            <Icon
-              onClick={() => handleBreweryListClick(brewery)}
-              name="target"
+      <Card.Group>
+        <Card
+          fluid
+          href="#card-example-link-card"
+          onClick={() => handleBreweryListClick(brewery)}
+        >
+          <Card.Content>
+            <Image
+              floated="right"
+              size="mini"
+              src="https://react.semantic-ui.com/images/avatar/large/steve.jpg"
             />
-          </a>
-        </Card.Content>
-        {/* onClick={() => props.addToFavorites(props.breweryCard)} */}
-      </Card>
+            <Card.Header>{brewery.name}</Card.Header>
+            <Card.Meta>{brewery.city}</Card.Meta>
+            {/* <Card.Description>
+        Steve wants to add you to the group <strong>best friends</strong>
+      </Card.Description> */}
+          </Card.Content>
+        </Card>
+      </Card.Group>
     </Grid.Column>
   );
 }
+/* onClick={() => props.addToFavorites(props.breweryCard)} */

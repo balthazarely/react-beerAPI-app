@@ -13,7 +13,7 @@ export default function SingleBrewSearchPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [breweriesPerPage, setBreweriesPerPage] = useState(6);
+  const [breweriesPerPage, setBreweriesPerPage] = useState(8);
 
   const [viewport, setViewPort] = useState({
     latitude: 37.0902,
