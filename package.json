@@ -19,6 +19,7 @@
     "react-dom": "^16.13.1",
     "react-geocode": "^0.2.2",
     "react-google-maps": "^9.4.5",
+    "react-js-pagination": "^3.0.3",
     "react-map-gl": "^5.2.9",
     "react-places-autocomplete": "^7.3.0",
     "react-router-dom": "^5.2.0",

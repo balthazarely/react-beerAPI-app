@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import { convertToNum } from "../Utility/_utility";
 import ReactMapGL, { Marker, Popup } from "react-map-gl";
 
-export default function SingleBrewMap({ brewery }) {
-  const [viewport, setViewPort] = useState({
-    latitude: 37.0902,
-    longitude: -95.7129,
-    width: "100%",
-    height: "100%",
-    zoom: 3,
-  });
+export default function SingleBrewMap({ brewery, viewport, setViewPort }) {
+  //   const [viewport, setViewPort] = useState({
+  //     latitude: 37.0902,
+  //     longitude: -95.7129,
+  //     width: "100%",
+  //     height: "100%",
+  //     zoom: 3,
+  //   });
 
   const [selectedBrew, setSelectedBrew] = useState("");
 
