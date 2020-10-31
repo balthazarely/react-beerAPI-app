@@ -122,35 +122,33 @@ export default function MainLayout() {
   return (
     <Router>
       <NavBar />
-      <div style={{ marginTop: "60px" }}>
-        <Switch>
-          <>
-            <Route exact path="/">
-              {/* <Search addToFavorites={addToFavorites} /> */}
-              <LocationBrewSearchPage addToFavorites={addToFavorites} />
-            </Route>
-            <Route exact path="/singleBrewSearch">
-              <SingleBrewSearchPage />
-            </Route>
-            <Route exact path="/favorites">
-              {/* <FilterPanel handleFilterInput={handleFilterInput} /> */}
-              <MyFavorites
-                favorites={data}
-                removeFavorite={removeFavorite}
-                handleFilterInput={handleFilterInput}
-              />
-            </Route>
-            <Route exact path="/about">
-              <About />
-            </Route>
-            <Route
-              exact
-              path={["/brewery/:id"]}
-              component={SingleBeerPage}
-            ></Route>
-          </>
-        </Switch>
-      </div>
+      <Switch>
+        <>
+          <Route exact path="/">
+            {/* <Search addToFavorites={addToFavorites} /> */}
+            <LocationBrewSearchPage addToFavorites={addToFavorites} />
+          </Route>
+          <Route exact path="/singleBrewSearch">
+            <SingleBrewSearchPage />
+          </Route>
+          <Route exact path="/favorites">
+            {/* <FilterPanel handleFilterInput={handleFilterInput} /> */}
+            <MyFavorites
+              favorites={data}
+              removeFavorite={removeFavorite}
+              handleFilterInput={handleFilterInput}
+            />
+          </Route>
+          <Route exact path="/about">
+            <About />
+          </Route>
+          <Route
+            exact
+            path={["/brewery/:id"]}
+            component={SingleBeerPage}
+          ></Route>
+        </>
+      </Switch>
     </Router>
   );
 }

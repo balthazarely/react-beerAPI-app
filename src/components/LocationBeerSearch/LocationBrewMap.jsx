@@ -3,20 +3,12 @@ import { convertToNum } from "../Utility/_utility";
 import ReactMapGL, { Marker, Popup } from "react-map-gl";
 
 export default function LocationBrewMap({ brewery, viewport, setViewport }) {
-  //   const [viewport, setViewport] = useState({
-  //     latitude: 37.0902,
-  //     longitude: -95.7129,
-  //     width: "100%",
-  //     height: "100%",
-  //     zoom: 3,
-  //   });
-
   const [selectedBrew, setSelectedBrew] = useState("");
 
   return (
     <div
       className="map-wrapper"
-      style={{ position: "relative", height: "500px" }}
+      style={{ position: "relative", height: "100vh", width: "100vw", top: 0 }}
     >
       <ReactMapGL
         {...viewport}

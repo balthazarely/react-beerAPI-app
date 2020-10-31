@@ -9,7 +9,7 @@ import { convertToNum } from "../Utility/_utility";
 
 export default function SingleBrewSearchPage() {
   const [brewery, setBewery] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("Red");
+  const [searchTerm, setSearchTerm] = useState("");
   // Default Viewport for Map
   const [viewport, setViewPort] = useState({
     latitude: 37.0902,

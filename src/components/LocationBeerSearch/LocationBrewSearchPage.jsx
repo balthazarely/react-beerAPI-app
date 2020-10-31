@@ -2,8 +2,9 @@ import React, { useState, useEffect, useRef } from "react";
 import LocationBrewInput from "./LocationBrewInput";
 import LocationBrewList from "./LocationBrewList";
 import LocationBrewMap from "./LocationBrewMap";
+import GetUserLocation from "./GetUserLocation";
 import Pagination from "./Pagination";
-import { Container, Grid } from "semantic-ui-react";
+import { Container, Grid, Card } from "semantic-ui-react";
 import Axios from "axios";
 import { convertToNum } from "../Utility/_utility";
 
@@ -33,26 +34,6 @@ export default function LocationBrewSearchPage() {
       handleAPIFetch();
     }
   }, [location]);
-
-  // const handleSearch = () => {
-  //   let url = `https://api.openbrewerydb.org/breweries/search?query=${searchTerm}`;
-  //   Axios.get(url).then((res) => {
-  //     setBewery(res.data);
-  //     console.log(res.data);
-  //   });
-  //   let resetView = {
-  //     latitude: 37.0902,
-  //     longitude: -95.7129,
-  //     width: "100%",
-  //     height: "100%",
-  //     zoom: 3,
-  //   };
-  //   setViewPort(resetView);
-  // };
-
-  // useEffect(() => {
-  //   handleSearch();
-  // }, [searchTerm]);
 
   const handleBreweryListClick = (brewery) => {
     if (
@@ -86,28 +67,46 @@ export default function LocationBrewSearchPage() {
   };
 
   return (
-    <Container>
-      <LocationBrewInput setLocation={setLocation} setViewport={setViewport} />
-      <Grid stackable columns={2}>
-        <Grid.Column>
-          <LocationBrewList
-            brewery={currentPost}
-            handleBreweryListClick={handleBreweryListClick}
+    <Grid stackable columns={2}>
+      <Grid.Column width={10}>
+        <div
+          className="search-container"
+          style={{
+            backgroundColor: "white",
+            position: "absolute",
+            top: "25px",
+            left: "25px",
+            zIndex: "100",
+            margin: "10px",
+            padding: "10px",
+            boxShadow: "0px 5px 10px -2px rgba(0, 0, 0, 0.25)",
+          }}
+        >
+          <LocationBrewInput
+            setLocation={setLocation}
+            setViewport={setViewport}
           />
-          <Pagination
-            breweriesPerPage={breweriesPerPage}
-            totalBreweries={brewery.length}
-            paginate={paginate}
-          />
-        </Grid.Column>
-        <Grid.Column>
+        </div>
+        <div className="map-wrapper">
           <LocationBrewMap
             brewery={brewery}
             setViewport={setViewport}
             viewport={viewport}
-          />
-        </Grid.Column>
-      </Grid>
-    </Container>
+          />{" "}
+        </div>
+      </Grid.Column>
+      <Grid.Column width={6}>
+        <LocationBrewList
+          brewery={currentPost}
+          handleBreweryListClick={handleBreweryListClick}
+        />
+        <Pagination
+          breweriesPerPage={breweriesPerPage}
+          totalBreweries={brewery.length}
+          paginate={paginate}
+        />{" "}
+        <GetUserLocation setLocation={setLocation} setViewport={setViewport} />
+      </Grid.Column>
+    </Grid>
   );
 }
