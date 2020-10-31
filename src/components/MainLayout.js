@@ -126,7 +126,8 @@ export default function MainLayout() {
         <Switch>
           <>
             <Route exact path="/">
-              <Search addToFavorites={addToFavorites} />
+              {/* <Search addToFavorites={addToFavorites} /> */}
+              <LocationBrewSearchPage addToFavorites={addToFavorites} />
             </Route>
             <Route exact path="/singleBrewSearch">
               <SingleBrewSearchPage />

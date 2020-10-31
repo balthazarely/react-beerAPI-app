@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import LocationBrewInput from "./LocationBrewInput";
 import LocationBrewList from "./LocationBrewList";
 import LocationBrewMap from "./LocationBrewMap";
@@ -9,15 +9,68 @@ import { convertToNum } from "../Utility/_utility";
 
 export default function LocationBrewSearchPage() {
   const [brewery, setBewery] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("Red");
   // Default Viewport for Map
-  const [viewport, setViewPort] = useState({
+  const [viewport, setViewport] = useState({
     latitude: 37.0902,
     longitude: -95.7129,
     width: "100%",
     height: "100%",
     zoom: 3,
   });
+
+  const [location, setLocation] = useState({ city: "", state: "" });
+
+  const handleAPIFetch = () => {
+    let url = `https://api.openbrewerydb.org/breweries?by_city=${location.city}&per_page=50&by_state=${location.state}`;
+    Axios.get(url).then((res) => {
+      setBewery(res.data);
+      console.log(res.data);
+    });
+  };
+
+  useEffect(() => {
+    if (location.city !== "") {
+      handleAPIFetch();
+    }
+  }, [location]);
+
+  // const handleSearch = () => {
+  //   let url = `https://api.openbrewerydb.org/breweries/search?query=${searchTerm}`;
+  //   Axios.get(url).then((res) => {
+  //     setBewery(res.data);
+  //     console.log(res.data);
+  //   });
+  //   let resetView = {
+  //     latitude: 37.0902,
+  //     longitude: -95.7129,
+  //     width: "100%",
+  //     height: "100%",
+  //     zoom: 3,
+  //   };
+  //   setViewPort(resetView);
+  // };
+
+  // useEffect(() => {
+  //   handleSearch();
+  // }, [searchTerm]);
+
+  const handleBreweryListClick = (brewery) => {
+    if (
+      isNaN(convertToNum(brewery.latitude)) ||
+      isNaN(convertToNum(brewery.longitude))
+    ) {
+      return;
+    } else {
+      let newViewport = {
+        latitude: convertToNum(brewery.latitude),
+        longitude: convertToNum(brewery.longitude),
+        width: "100%",
+        height: "100%",
+        zoom: 14,
+      };
+      setViewport(newViewport);
+    }
+  };
 
   //Pagination Stuff
   const [currentPage, setCurrentPage] = useState(1);
@@ -32,47 +85,9 @@ export default function LocationBrewSearchPage() {
     setCurrentPage(number);
   };
 
-  const handleSearch = () => {
-    let url = `https://api.openbrewerydb.org/breweries/search?query=${searchTerm}`;
-    Axios.get(url).then((res) => {
-      setBewery(res.data);
-      console.log(res.data);
-    });
-    let resetView = {
-      latitude: 37.0902,
-      longitude: -95.7129,
-      width: "100%",
-      height: "100%",
-      zoom: 3,
-    };
-    setViewPort(resetView);
-  };
-
-  useEffect(() => {
-    handleSearch();
-  }, [searchTerm]);
-
-  const handleBreweryListClick = (brewery) => {
-    if (
-      isNaN(convertToNum(brewery.latitude)) ||
-      isNaN(convertToNum(brewery.longitude))
-    ) {
-      return;
-    } else {
-      let brew = {
-        latitude: convertToNum(brewery.latitude),
-        longitude: convertToNum(brewery.longitude),
-        width: "100%",
-        height: "100%",
-        zoom: 10,
-      };
-      setViewPort(brew);
-    }
-  };
-
   return (
     <Container>
-      <LocationBrewInput setSearchTerm={setSearchTerm} />
+      <LocationBrewInput setLocation={setLocation} setViewport={setViewport} />
       <Grid stackable columns={2}>
         <Grid.Column>
           <LocationBrewList
@@ -88,7 +103,7 @@ export default function LocationBrewSearchPage() {
         <Grid.Column>
           <LocationBrewMap
             brewery={brewery}
-            setViewPort={setViewPort}
+            setViewport={setViewport}
             viewport={viewport}
           />
         </Grid.Column>

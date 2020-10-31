@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { convertToNum } from "../Utility/_utility";
 import ReactMapGL, { Marker, Popup } from "react-map-gl";
 
-export default function LocationBrewMap({ brewery, viewport, setViewPort }) {
-  //   const [viewport, setViewPort] = useState({
+export default function LocationBrewMap({ brewery, viewport, setViewport }) {
+  //   const [viewport, setViewport] = useState({
   //     latitude: 37.0902,
   //     longitude: -95.7129,
   //     width: "100%",
@@ -13,7 +13,6 @@ export default function LocationBrewMap({ brewery, viewport, setViewPort }) {
 
   const [selectedBrew, setSelectedBrew] = useState("");
 
-  console.log(brewery);
   return (
     <div
       className="map-wrapper"
@@ -24,7 +23,7 @@ export default function LocationBrewMap({ brewery, viewport, setViewPort }) {
         mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
         mapStyle="mapbox://styles/balthazarely/ckg8fukiq14tk19mxrkt19zgv"
         onViewportChange={(viewport) => {
-          setViewPort(viewport);
+          setViewport(viewport);
         }}
         style={{ position: "absolute", height: "100%" }}
       >
