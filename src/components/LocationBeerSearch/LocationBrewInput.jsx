@@ -56,7 +56,7 @@ export default function LocationBrewInput({
         Axios.get(
           "https://maps.googleapis.com/maps/api/geocode/json?latlng=" +
             lat +
-            "," +
+            ", " +
             long +
             "&key=AIzaSyDEn27GYmmHEz2tz-wNZJAfeqePlIP2_GI"
         )
@@ -69,6 +69,11 @@ export default function LocationBrewInput({
                 city: response.data.results[0].address_components[3].long_name,
                 state: response.data.results[0].address_components[5].long_name,
               });
+              setAddress(
+                response.data.results[0].address_components[3].long_name +
+                  "," +
+                  response.data.results[0].address_components[5].long_name
+              );
             }
           })
           .catch((error) => {

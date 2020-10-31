@@ -14,13 +14,14 @@ export default function LocationBrewListItem({
           onClick={() => handleBreweryListClick(brewery)}
         >
           <Card.Content>
-            <Image
-              floated="right"
-              size="mini"
-              src="https://react.semantic-ui.com/images/avatar/large/steve.jpg"
-            />
-            <Card.Header>{brewery.name}</Card.Header>
-            <Card.Meta>{brewery.city}</Card.Meta>
+            <Image floated="right" size="mini" src="beer.svg" />
+            <Card.Header style={{ fontSize: "14px" }}>
+              {brewery.name}
+            </Card.Header>
+            <Card.Meta>
+              <div>{brewery.street}</div>
+              {/* <div>{brewery.phone}</div> */}
+            </Card.Meta>
             {/* <Card.Description>
         Steve wants to add you to the group <strong>best friends</strong>
       </Card.Description> */}

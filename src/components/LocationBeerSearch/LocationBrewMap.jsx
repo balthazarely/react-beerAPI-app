@@ -8,7 +8,12 @@ export default function LocationBrewMap({ brewery, viewport, setViewport }) {
   return (
     <div
       className="map-wrapper"
-      style={{ position: "relative", height: "100vh", width: "100vw", top: 0 }}
+      style={{
+        position: "relative",
+        height: "100vh",
+        width: "100vw",
+        top: 0,
+      }}
     >
       <ReactMapGL
         {...viewport}
@@ -17,7 +22,7 @@ export default function LocationBrewMap({ brewery, viewport, setViewport }) {
         onViewportChange={(viewport) => {
           setViewport(viewport);
         }}
-        style={{ position: "absolute", height: "100%" }}
+        // style={{ position: "absolute", height: "100%" }}
       >
         {brewery.map((brew) => {
           if (brew.latitude === null || brew.longitude === null) {

@@ -4,7 +4,7 @@ import { Menu, Container } from "semantic-ui-react";
 
 export default function Nav({ setFormOpen }) {
   return (
-    <Menu inverted fixed="top">
+    <Menu inverted fixed="bottom">
       <Container>
         <Menu.Item name="CitySearch" header as={NavLink} exact to="/" />
         <Menu.Item

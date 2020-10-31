@@ -3,10 +3,19 @@ import LocationBrewInput from "./LocationBrewInput";
 import LocationBrewList from "./LocationBrewList";
 import LocationBrewMap from "./LocationBrewMap";
 import GetUserLocation from "./GetUserLocation";
+import ClickedBeerCard from "./ClickedBeerCard";
 import Pagination from "./Pagination";
-import { Container, Grid, Card } from "semantic-ui-react";
+import { Loader, Grid, Button } from "semantic-ui-react";
 import Axios from "axios";
 import { convertToNum } from "../Utility/_utility";
+import style from "./LocationBrewSearchPage.module.css";
+
+const loaderStyle = {
+  position: "absolute",
+  top: "50%",
+  zIndex: 100000,
+  left: "50%",
+};
 
 export default function LocationBrewSearchPage() {
   const [brewery, setBewery] = useState([]);
@@ -20,6 +29,8 @@ export default function LocationBrewSearchPage() {
   });
 
   const [location, setLocation] = useState({ city: "", state: "" });
+  const [clickedBrewery, setClickedBrewery] = useState({});
+  const [showClickedBrewery, setShowClickedBrewery] = useState(false);
 
   const handleAPIFetch = () => {
     let url = `https://api.openbrewerydb.org/breweries?by_city=${location.city}&per_page=50&by_state=${location.state}`;
@@ -36,6 +47,8 @@ export default function LocationBrewSearchPage() {
   }, [location]);
 
   const handleBreweryListClick = (brewery) => {
+    setClickedBrewery(brewery);
+    setShowClickedBrewery(true);
     if (
       isNaN(convertToNum(brewery.latitude)) ||
       isNaN(convertToNum(brewery.longitude))
@@ -53,41 +66,35 @@ export default function LocationBrewSearchPage() {
     }
   };
 
-  //Pagination Stuff
-  const [currentPage, setCurrentPage] = useState(1);
-  const [breweriesPerPage, setBreweriesPerPage] = useState(8);
-
-  //Get Current Post
-  const indexOfLastBrewery = currentPage * breweriesPerPage;
-  const indexOfFirstBrewery = indexOfLastBrewery - breweriesPerPage;
-  const currentPost = brewery.slice(indexOfFirstBrewery, indexOfLastBrewery);
-
-  const paginate = (number) => {
-    setCurrentPage(number);
-  };
-
   return (
-    <Grid stackable columns={2}>
-      <Grid.Column width={10}>
-        <div
-          className="search-container"
-          style={{
-            backgroundColor: "white",
-            position: "absolute",
-            top: "25px",
-            left: "25px",
-            zIndex: "100",
-            margin: "10px",
-            padding: "10px",
-            boxShadow: "0px 5px 10px -2px rgba(0, 0, 0, 0.25)",
-          }}
-        >
+    <Grid columns={2} style={{ margin: 0, padding: 0 }}>
+      {location.city === "" ? (
+        <Loader active size="large" inline="centered" style={loaderStyle} />
+      ) : null}
+
+      <Grid.Column width={12} style={{ margin: 0, padding: 0 }}>
+        <div className={style.searchContainer}>
           <LocationBrewInput
             setLocation={setLocation}
             setViewport={setViewport}
           />
         </div>
-        <div className="map-wrapper">
+
+        {showClickedBrewery ? (
+          <div className={style.clickedContainer}>
+            <ClickedBeerCard brewery={clickedBrewery} />
+            <Button
+              color="red"
+              circular
+              size="small"
+              icon="close"
+              className={style.closeBtn}
+              onClick={() => setShowClickedBrewery(false)}
+            />{" "}
+          </div>
+        ) : null}
+
+        <div className="map-wrapper" style={{ margin: 0, padding: 0 }}>
           <LocationBrewMap
             brewery={brewery}
             setViewport={setViewport}
@@ -95,16 +102,20 @@ export default function LocationBrewSearchPage() {
           />{" "}
         </div>
       </Grid.Column>
-      <Grid.Column width={6}>
+      <Grid.Column
+        width={4}
+        style={{ margin: 0, padding: 0 }}
+        only="computer tablet"
+      >
         <LocationBrewList
-          brewery={currentPost}
+          brewery={brewery}
           handleBreweryListClick={handleBreweryListClick}
         />
-        <Pagination
+        {/* <Pagination
           breweriesPerPage={breweriesPerPage}
           totalBreweries={brewery.length}
           paginate={paginate}
-        />{" "}
+        />{" "} */}
         <GetUserLocation setLocation={setLocation} setViewport={setViewport} />
       </Grid.Column>
     </Grid>
