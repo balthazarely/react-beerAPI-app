@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Axios from "axios";
 
 export default function GetUserLocation({ setLocation, setViewport }) {
-  // const [triggerUserLocation, setTriggerUserLocatoin ] = useState()
-
   const locatorButtonPressed = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(

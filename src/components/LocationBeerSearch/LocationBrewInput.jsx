@@ -6,14 +6,8 @@ import PlacesAutocomplete, {
 } from "react-places-autocomplete";
 import Axios from "axios";
 
-export default function LocationBrewInput({
-  setLocation,
-  setViewport,
-  triggerUserLocationGather,
-}) {
+export default function LocationBrewInput({ setLocation, setViewport }) {
   const [address, setAddress] = useState("");
-  // const [tempCoordinates, setTempCoordinates] = useState({});
-  // const [location, setLocation] = useState({ city: "", state: "" });
 
   const handleSelect = async (value) => {
     const results = await geocodeByAddress(value);

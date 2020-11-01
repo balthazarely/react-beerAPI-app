@@ -21,13 +21,9 @@ export default function SingleBrewListItem({
             />
             <Card.Header>{brewery.name}</Card.Header>
             <Card.Meta>{brewery.city}</Card.Meta>
-            {/* <Card.Description>
-        Steve wants to add you to the group <strong>best friends</strong>
-      </Card.Description> */}
           </Card.Content>
         </Card>
       </Card.Group>
     </Grid.Column>
   );
 }
-/* onClick={() => props.addToFavorites(props.breweryCard)} */

@@ -2,8 +2,16 @@ import React, { useState } from "react";
 import { convertToNum } from "../Utility/_utility";
 import ReactMapGL, { Marker, Popup } from "react-map-gl";
 
-export default function LocationBrewMap({ brewery, viewport, setViewport }) {
-  const [selectedBrew, setSelectedBrew] = useState("");
+export default function LocationBrewMap({
+  brewery,
+  viewport,
+  setViewport,
+  setSelectedBrew,
+  selectedBrew,
+  setClickedBrewery,
+  setShowClickedBrewery,
+}) {
+  // const [selectedBrew, setSelectedBrew] = useState("");
 
   return (
     <div
@@ -22,7 +30,6 @@ export default function LocationBrewMap({ brewery, viewport, setViewport }) {
         onViewportChange={(viewport) => {
           setViewport(viewport);
         }}
-        // style={{ position: "absolute", height: "100%" }}
       >
         {brewery.map((brew) => {
           if (brew.latitude === null || brew.longitude === null) {
@@ -46,6 +53,8 @@ export default function LocationBrewMap({ brewery, viewport, setViewport }) {
                   onClick={(e) => {
                     e.preventDefault();
                     setSelectedBrew(brew);
+                    setClickedBrewery(brew);
+                    setShowClickedBrewery(true);
                     console.log("i clicked", brew);
                   }}
                 >
@@ -63,7 +72,7 @@ export default function LocationBrewMap({ brewery, viewport, setViewport }) {
               setSelectedBrew("");
             }}
           >
-            <h2>{selectedBrew.name}</h2>
+            <h4>{selectedBrew.name}</h4>
           </Popup>
         ) : null}
       </ReactMapGL>

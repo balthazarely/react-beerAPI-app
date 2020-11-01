@@ -1,5 +1,6 @@
 import React from "react";
-import { Card, Button, Image } from "semantic-ui-react";
+import { Card, Image } from "semantic-ui-react";
+import { formatPhoneNumber } from "../Utility/_utility";
 
 const cardStyles = {
   postion: "relative",
@@ -21,7 +22,7 @@ const ClickedBeerCard = ({ brewery }) => (
       <Card.Description>
         <div>{brewery.street}</div>
         <div> {brewery.city}</div>
-        <div>{brewery.phone}</div>
+        <div>{formatPhoneNumber(brewery.phone)}</div>
         <div>{brewery.website}</div>
       </Card.Description>
     </Card.Content>

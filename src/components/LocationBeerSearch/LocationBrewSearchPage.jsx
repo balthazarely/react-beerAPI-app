@@ -4,7 +4,6 @@ import LocationBrewList from "./LocationBrewList";
 import LocationBrewMap from "./LocationBrewMap";
 import GetUserLocation from "./GetUserLocation";
 import ClickedBeerCard from "./ClickedBeerCard";
-import Pagination from "./Pagination";
 import { Loader, Grid, Button } from "semantic-ui-react";
 import Axios from "axios";
 import { convertToNum } from "../Utility/_utility";
@@ -31,11 +30,14 @@ export default function LocationBrewSearchPage() {
   const [location, setLocation] = useState({ city: "", state: "" });
   const [clickedBrewery, setClickedBrewery] = useState({});
   const [showClickedBrewery, setShowClickedBrewery] = useState(false);
+  //this gets passed down to the locationBrewMap
+  const [selectedBrew, setSelectedBrew] = useState("");
 
   const handleAPIFetch = () => {
     let url = `https://api.openbrewerydb.org/breweries?by_city=${location.city}&per_page=50&by_state=${location.state}`;
     Axios.get(url).then((res) => {
       setBewery(res.data);
+      setShowClickedBrewery(false);
       console.log(res.data);
     });
   };
@@ -96,6 +98,10 @@ export default function LocationBrewSearchPage() {
 
         <div className="map-wrapper" style={{ margin: 0, padding: 0 }}>
           <LocationBrewMap
+            setSelectedBrew={setSelectedBrew}
+            selectedBrew={selectedBrew}
+            setClickedBrewery={setClickedBrewery}
+            setShowClickedBrewery={setShowClickedBrewery}
             brewery={brewery}
             setViewport={setViewport}
             viewport={viewport}
@@ -111,11 +117,6 @@ export default function LocationBrewSearchPage() {
           brewery={brewery}
           handleBreweryListClick={handleBreweryListClick}
         />
-        {/* <Pagination
-          breweriesPerPage={breweriesPerPage}
-          totalBreweries={brewery.length}
-          paginate={paginate}
-        />{" "} */}
         <GetUserLocation setLocation={setLocation} setViewport={setViewport} />
       </Grid.Column>
     </Grid>

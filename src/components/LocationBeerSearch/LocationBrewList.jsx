@@ -1,5 +1,5 @@
 import React from "react";
-import { Image, Grid, Segment } from "semantic-ui-react";
+import { Grid } from "semantic-ui-react";
 import SingleBrewListItem from "./LocationBrewListItem";
 
 const rowStyle = {
