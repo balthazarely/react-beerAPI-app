@@ -3,11 +3,16 @@ import MyFavoritesListCard from "./MyFavoritesListCard";
 import { Grid } from "semantic-ui-react";
 
 const rowStyle = {
-  maxHeight: "100vh",
+  maxHeight: "500px",
   overflowY: "scroll",
+  marginTop: "10px",
 };
 
-export default function MyFavoritesList({ favorites, removeFavorite }) {
+export default function MyFavoritesList({
+  favorites,
+  removeFavorite,
+  clickedCard,
+}) {
   return (
     <Grid>
       <Grid.Row style={rowStyle} columns={1}>
@@ -18,6 +23,7 @@ export default function MyFavoritesList({ favorites, removeFavorite }) {
                 key={favorite.id}
                 favorite={favorite}
                 removeFavorite={removeFavorite}
+                clickedCard={clickedCard}
               />
             );
           })}

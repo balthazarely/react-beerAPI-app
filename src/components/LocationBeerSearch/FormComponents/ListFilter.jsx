@@ -1,5 +1,6 @@
 import React from "react";
 import { Card, Form, Radio } from "semantic-ui-react";
+import style from "./ListFilter.module.css";
 
 export default function ListFilter({ setBreweryType, breweryType }) {
   return (
@@ -26,6 +27,13 @@ export default function ListFilter({ setBreweryType, breweryType }) {
             checked={breweryType === "Brew Pub"}
             value="Brew Pub"
             onClick={() => setBreweryType("Brew Pub")}
+          />
+          <Form.Field
+            control={Radio}
+            label="Large"
+            checked={breweryType === "Large"}
+            value="Large"
+            onClick={() => setBreweryType("Large")}
           />
         </Form>
       </Card.Content>

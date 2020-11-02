@@ -5,12 +5,13 @@ import NavBar from "./Navbar";
 import SingleBeerPage from "./SingleBeerPage/SingleBeerPage";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { filterExcludeColumns } from "./Utility/_filterExcludeColumns";
-import { dummyFavorites } from "./Utility/_dummyFavorites";
+import { data } from "./API/Data";
 
 export default function MainLayout() {
-  const [favorites, setFavorites] = useState(dummyFavorites);
+  const [favorites, setFavorites] = useState(data);
   const [searchTerm, setSearchTerm] = useState("");
 
+  // Basic CRUD Stuff
   const addToFavorites = (obj) => {
     console.log(obj);
     setFavorites([...favorites, obj]);
@@ -20,15 +21,15 @@ export default function MainLayout() {
     setFavorites(favorites.filter(({ id }) => id !== itemId));
   };
 
+  // Filter Section
   function filterByValue(array) {
-    let results = array.filter((o) =>
+    return array.filter((o) =>
       Object.keys(o).some((k) =>
         filterExcludeColumns.includes(k)
           ? false
           : o[k].toLowerCase().includes(searchTerm.toLowerCase())
       )
     );
-    return results;
   }
 
   return (
@@ -40,12 +41,10 @@ export default function MainLayout() {
             <LocationBrewSearchPage addToFavorites={addToFavorites} />
           </Route>
           <Route exact path="/favorites">
-            <h1>Search Term: {searchTerm}</h1>
             <MyFavoritesPage
               setSearchTerm={setSearchTerm}
               favorites={filterByValue(favorites)}
               removeFavorite={removeFavorite}
-              // handleFilterInput={handleFilterInput}
             />
           </Route>
           <Route exact path="/about"></Route>

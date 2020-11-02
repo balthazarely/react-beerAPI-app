@@ -1,0 +1,35 @@
+.header {
+  font-size: 14px;
+}
+
+.card {
+  cursor: pointer;
+}
+
+.card:hover .delBtn {
+  opacity: 1;
+  transition: 300ms;
+}
+
+.card:hover .viewBtn {
+  opacity: 1;
+  transition: 300ms;
+}
+
+.viewBtn {
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  right: 54px;
+  transform: translateY(-50%);
+  z-index: 20000;
+}
+
+.delBtn {
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+  z-index: 20000;
+}

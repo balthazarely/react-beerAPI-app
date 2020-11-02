@@ -6,7 +6,7 @@ import GetUserLocation from "./GetUserLocation";
 import ClickedBeerCard from "./ClickedBeerCard";
 import Modal from "./Modal";
 import ListFilter from "./FormComponents/ListFilter";
-import { Loader, Grid, Button } from "semantic-ui-react";
+import { Loader, Grid, Button, Transition } from "semantic-ui-react";
 import Axios from "axios";
 import { convertToNum } from "../Utility/_utility";
 import style from "./LocationBrewSearchPage.module.css";
@@ -101,8 +101,16 @@ export default function LocationBrewSearchPage({ addToFavorites }) {
       return breweries.filter((brew) => brew.brewery_type === "micro");
     } else if (breweryType === "Brew Pub") {
       return breweries.filter((brew) => brew.brewery_type === "brewpub");
+    } else if (breweryType === "Large") {
+      return breweries.filter((brew) => brew.brewery_type === "large");
     }
   };
+
+  const handleShowFilter = (e) => {
+    e.preventDefault();
+    setShowFilter(!showFilter);
+  };
+  const [showFilter, setShowFilter] = useState(0);
 
   return (
     <Grid columns={2} style={{ margin: 0, padding: 0 }}>
@@ -125,14 +133,30 @@ export default function LocationBrewSearchPage({ addToFavorites }) {
 
         <Modal openModal={openModal} setOpenModal={setOpenModal} />
 
-        <div className={style.listFilter}>
-          {brewery.length === 0 ? null : (
-            <ListFilter
-              setBreweryType={setBreweryType}
-              breweryType={breweryType}
-            />
-          )}
-        </div>
+        {brewery.length === 0 ? null : (
+          <div>
+            <Button
+              className={style.filterBtn}
+              size="tiny"
+              color="orange"
+              onClick={handleShowFilter}
+            >
+              {showFilter ? "Hide" : "Show"} Filter
+            </Button>
+            <div
+              className={style.listFilter}
+              style={{
+                height: showFilter ? "146px" : "0px",
+              }}
+            >
+              <ListFilter
+                setBreweryType={setBreweryType}
+                breweryType={breweryType}
+              />
+            </div>
+          </div>
+        )}
+
         {showClickedBrewery ? (
           <div className={style.clickedContainer}>
             <ClickedBeerCard
