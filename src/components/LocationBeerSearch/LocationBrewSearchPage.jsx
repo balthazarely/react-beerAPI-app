@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import LocationBrewInput from "./LocationBrewInput";
 import LocationBrewList from "./LocationBrewList";
 import LocationBrewMap from "./LocationBrewMap";
@@ -47,7 +47,6 @@ export default function LocationBrewSearchPage({ addToFavorites }) {
     Axios.get(url).then((res) => {
       setBewery(res.data);
       setShowClickedBrewery(false);
-      console.log(res.data);
     });
   };
 
@@ -62,7 +61,6 @@ export default function LocationBrewSearchPage({ addToFavorites }) {
     let url = `https://api.openbrewerydb.org/breweries/search?query=${e.target.value}`;
     Axios.get(url).then((res) => {
       setBewery(res.data);
-      console.log(res.data);
     });
     let resetView = {
       latitude: 37.0902,

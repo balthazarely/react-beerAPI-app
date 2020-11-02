@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import ReactMapGL, { Marker, Popup } from "react-map-gl";
 import { convertToNum } from "../Utility/_utility";
 
@@ -28,7 +28,7 @@ export default function FavoriteMap(props) {
         {props.favorites &&
           props.favorites.map((brew) => {
             if (brew.latitude === null || brew.longitude === null) {
-              return;
+              return null;
             } else {
               return (
                 <Marker
@@ -50,7 +50,7 @@ export default function FavoriteMap(props) {
                       setSelectedBrew(brew);
                     }}
                   >
-                    <img src="beer.svg" />
+                    <img src="beer.svg" alt="beer icon" />
                   </button>
                 </Marker>
               );

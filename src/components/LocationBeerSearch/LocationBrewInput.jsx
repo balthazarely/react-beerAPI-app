@@ -139,8 +139,10 @@ export default function LocationBrewInput({
                       const style = {
                         backgroundColor: suggestion.active ? "#41b6e6" : "#fff",
                       };
+
                       return (
                         <div
+                          key={suggestion.placeId}
                           style={{
                             backgroundColor: "white",
                             position: "absolute",
@@ -149,7 +151,6 @@ export default function LocationBrewInput({
                             margin: "10px",
                             padding: "10px",
                           }}
-                          key={i}
                           {...getSuggestionItemProps(suggestion, { style })}
                         >
                           {suggestion.description}
@@ -167,7 +168,7 @@ export default function LocationBrewInput({
                 placeholder="search for brewery"
                 size="large"
                 onChange={(e) => handleNameSearched(e)}
-              />{" "}
+              />
               <Button
                 loading={geolocationLoading ? true : false}
                 icon

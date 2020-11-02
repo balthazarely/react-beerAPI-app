@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Card, Form, Radio } from "semantic-ui-react";
 
 export default function ListFilter({ setBreweryType, breweryType }) {

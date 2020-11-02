@@ -48,10 +48,7 @@ export default function GetUserLocation({ setLocation, setViewport }) {
     }
   };
 
-  useEffect(() => {
-    locatorButtonPressed();
-    console.log("user location being collected");
-  }, []);
+  useEffect(locatorButtonPressed, []);
 
   return <div></div>;
 }

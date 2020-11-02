@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { Menu, Icon } from "semantic-ui-react";
 
-export default function Nav({ setFormOpen }) {
+export default function Nav() {
   return (
     <Menu icon="labeled" inverted fixed="bottom" size="large" fluid widths={3}>
       <Menu.Item name="gamepad" header as={NavLink} exact to="/">
@@ -16,20 +16,4 @@ export default function Nav({ setFormOpen }) {
       </Menu.Item>
     </Menu>
   );
-}
-
-{
-  /* <Menu inverted fixed="bottom" size="huge">
-<Container>
-  <Menu.Item name="CitySearch" header as={NavLink} exact to="/" />
-  <Menu.Item
-    name="BrewerySearch"
-    header
-    as={NavLink}
-    exact
-    to="/singleBrewSearch "
-  />
-  <Menu.Item name="Favorites" header as={NavLink} exact to="/favorites" />
-</Container>
-</Menu> */
 }

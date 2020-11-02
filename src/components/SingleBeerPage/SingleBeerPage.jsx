@@ -9,21 +9,17 @@ export default function SingleBeerPage({ match }) {
   useEffect(() => {
     let url = `https://api.openbrewerydb.org/breweries/${match.params.id}`;
     Axios.get(url).then((res) => {
-      console.log(res.data);
       setBrewery(res.data);
     });
-  }, []);
+  }, [match]);
 
   return (
     <Container>
       <Grid>
-        <Grid.Column width={10}>
+        <Grid.Column width={16}>
           <SingleBeerPageHeader brewery={brewery} />
           {/* <EventDetailedInfo event={event} /> */}
           {/* <EventDetailedChat /> */}
-        </Grid.Column>
-        <Grid.Column width={6}>
-          {/* <EventDetailedSidebar attendees={event.attendees} /> */}
         </Grid.Column>
       </Grid>
     </Container>

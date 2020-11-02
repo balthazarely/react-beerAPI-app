@@ -5,21 +5,17 @@ import style from "./LocationBrewSearchPage.module.css";
 function ModalExampleBasic({ openModal, setOpenModal }) {
   return (
     <Modal
-      circular
       onClose={() => setOpenModal(false)}
       onOpen={() => setOpenModal(true)}
       open={openModal}
       icon="question"
       color="red"
-      size="medium"
       trigger={
         <Button
           className={style.infoButton}
           circular
           icon="question"
           color="red"
-          size="medium"
-          className={style.infoButton}
         />
       }
     >

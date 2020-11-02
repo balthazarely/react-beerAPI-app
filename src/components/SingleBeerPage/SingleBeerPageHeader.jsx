@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { Segment, Image, Item, Header, Button } from "semantic-ui-react";
 
 const eventImageStyle = {
@@ -11,14 +10,18 @@ const eventImageTextStyle = {
   bottom: "5%",
   left: "5%",
   width: "100%",
-  height: "auto",
+  height: "100px",
   color: "white",
 };
 
 export default function SingleBeerPageHeader({ brewery }) {
   return (
     <Segment.Group>
-      <Segment basic attached="top" style={{ padding: "0" }}>
+      <Segment
+        basic
+        attached="top"
+        style={{ padding: "0", height: "200px", overflow: "hidden" }}
+      >
         <Image src={`/drinks.jpg`} fluid style={eventImageStyle} />
 
         <Segment basic style={eventImageTextStyle}>
@@ -42,15 +45,6 @@ export default function SingleBeerPageHeader({ brewery }) {
       <Segment attached="bottom">
         <Button>Cancel My Place</Button>
         <Button color="teal">JOIN THIS EVENT</Button>
-
-        {/* <Button
-          as={Link}
-          to={`/manage/${event.id}`}
-          color="orange"
-          floated="right"
-        >
-          Manage Event
-        </Button> */}
       </Segment>
     </Segment.Group>
   );

@@ -27,4 +27,3 @@ export default function LocationBrewListItem({
     </Grid.Column>
   );
 }
-/* onClick={() => props.addToFavorites(props.breweryCard)} */

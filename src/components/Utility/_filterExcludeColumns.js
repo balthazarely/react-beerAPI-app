@@ -1,0 +1,15 @@
+export const filterExcludeColumns = [
+  "address_2",
+  "address_3",
+  "country",
+  "county_province",
+  "created_at",
+  "id",
+  "latitude",
+  "longitude",
+  "phone",
+  "postal_code",
+  "street",
+  "updated_at",
+  "website_url",
+];

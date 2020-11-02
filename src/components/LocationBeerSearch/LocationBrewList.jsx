@@ -4,7 +4,6 @@ import SingleBrewListItem from "./LocationBrewListItem";
 
 const rowStyle = {
   maxHeight: "100vh",
-  overflowY: "hidden",
   overflowY: "scroll",
 };
 

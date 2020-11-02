@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { convertToNum } from "../Utility/_utility";
 import ReactMapGL, { Marker, Popup } from "react-map-gl";
 
@@ -33,7 +33,7 @@ export default function LocationBrewMap({
       >
         {brewery.map((brew) => {
           if (brew.latitude === null || brew.longitude === null) {
-            return;
+            return null;
           } else {
             return (
               <Marker
@@ -55,10 +55,9 @@ export default function LocationBrewMap({
                     setSelectedBrew(brew);
                     setClickedBrewery(brew);
                     setShowClickedBrewery(true);
-                    console.log("i clicked", brew);
                   }}
                 >
-                  <img src="beer.svg" />
+                  <img src="beer.svg" alt="beer icon" />
                 </button>
               </Marker>
             );

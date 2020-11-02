@@ -1,12 +1,10 @@
 import React from "react";
-import { Header, Image, Table, Button } from "semantic-ui-react";
+import { Header, Image, Table } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
 export default function MyFavoriteCard(props) {
-  // onDoubleClick={() => props.removeFavorite(props.favorite.id)}
-
   return (
-    <Table.Row fluid>
+    <Table.Row>
       <Table.Cell selectable>
         <Header as="h4" image>
           <Image src="/beer.svg" rounded size="mini" />
