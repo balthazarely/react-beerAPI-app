@@ -1,17 +1,9 @@
 import React from "react";
-import { Card, Image } from "semantic-ui-react";
+import { Card, Image, Button } from "semantic-ui-react";
 import { formatPhoneNumber } from "../Utility/_utility";
+import { Link } from "react-router-dom";
 
-const cardStyles = {
-  postion: "relative",
-};
-
-const btnStyles = {
-  postion: "absolute",
-  top: "-10px",
-};
-
-const ClickedBeerCard = ({ brewery }) => (
+const ClickedBeerCard = ({ brewery, addToFavorites }) => (
   <Card>
     <Image src={`/drinks.jpg`} wrapped ui={false} />
     <Card.Content>
@@ -25,6 +17,16 @@ const ClickedBeerCard = ({ brewery }) => (
         <div>{formatPhoneNumber(brewery.phone)}</div>
         <div>{brewery.website}</div>
       </Card.Description>
+    </Card.Content>
+    <Card.Content extra>
+      <div className="ui two buttons">
+        <Button basic color="green" as={Link} to={`/brewery/${brewery.id}`}>
+          View Location
+        </Button>
+        <Button basic color="red" onClick={() => addToFavorites(brewery)}>
+          Favorite
+        </Button>
+      </div>
     </Card.Content>
   </Card>
 );

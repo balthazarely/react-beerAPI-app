@@ -4,6 +4,8 @@ import LocationBrewList from "./LocationBrewList";
 import LocationBrewMap from "./LocationBrewMap";
 import GetUserLocation from "./GetUserLocation";
 import ClickedBeerCard from "./ClickedBeerCard";
+import Modal from "./Modal";
+import ListFilter from "./FormComponents/ListFilter";
 import { Loader, Grid, Button } from "semantic-ui-react";
 import Axios from "axios";
 import { convertToNum } from "../Utility/_utility";
@@ -16,8 +18,10 @@ const loaderStyle = {
   left: "50%",
 };
 
-export default function LocationBrewSearchPage() {
+export default function LocationBrewSearchPage({ addToFavorites }) {
+  // Main data array
   const [brewery, setBewery] = useState([]);
+  const [serachByCity, setSearchByCity] = useState(true);
   // Default Viewport for Map
   const [viewport, setViewport] = useState({
     latitude: 37.0902,
@@ -26,12 +30,17 @@ export default function LocationBrewSearchPage() {
     height: "100%",
     zoom: 3,
   });
-
   const [location, setLocation] = useState({ city: "", state: "" });
+  // This is the brewery that is clicked on, and is passed into the brewery card
   const [clickedBrewery, setClickedBrewery] = useState({});
+  // This is deciding on if the card shows or not
   const [showClickedBrewery, setShowClickedBrewery] = useState(false);
   //this gets passed down to the locationBrewMap
   const [selectedBrew, setSelectedBrew] = useState("");
+  // Turns on or off the button loading
+  const [geolocationLoading, setGeolocationLoading] = useState(false);
+  // Open Modal
+  const [openModal, setOpenModal] = useState(false);
 
   const handleAPIFetch = () => {
     let url = `https://api.openbrewerydb.org/breweries?by_city=${location.city}&per_page=50&by_state=${location.state}`;
@@ -47,6 +56,23 @@ export default function LocationBrewSearchPage() {
       handleAPIFetch();
     }
   }, [location]);
+
+  const handleNameSearched = async (e) => {
+    setShowClickedBrewery(false);
+    let url = `https://api.openbrewerydb.org/breweries/search?query=${e.target.value}`;
+    Axios.get(url).then((res) => {
+      setBewery(res.data);
+      console.log(res.data);
+    });
+    let resetView = {
+      latitude: 37.0902,
+      longitude: -95.7129,
+      width: "100%",
+      height: "100%",
+      zoom: 3,
+    };
+    setViewport(resetView);
+  };
 
   const handleBreweryListClick = (brewery) => {
     setClickedBrewery(brewery);
@@ -68,6 +94,18 @@ export default function LocationBrewSearchPage() {
     }
   };
 
+  // Filter
+  const [breweryType, setBreweryType] = useState("All");
+  const brewFilter = (breweries) => {
+    if (breweryType === "All") {
+      return breweries;
+    } else if (breweryType === "Mirco") {
+      return breweries.filter((brew) => brew.brewery_type === "micro");
+    } else if (breweryType === "Brew Pub") {
+      return breweries.filter((brew) => brew.brewery_type === "brewpub");
+    }
+  };
+
   return (
     <Grid columns={2} style={{ margin: 0, padding: 0 }}>
       {location.city === "" ? (
@@ -79,12 +117,30 @@ export default function LocationBrewSearchPage() {
           <LocationBrewInput
             setLocation={setLocation}
             setViewport={setViewport}
+            handleNameSearched={handleNameSearched}
+            serachByCity={serachByCity}
+            setSearchByCity={setSearchByCity}
+            setGeolocationLoading={setGeolocationLoading}
+            geolocationLoading={geolocationLoading}
           />
         </div>
 
+        <Modal openModal={openModal} setOpenModal={setOpenModal} />
+
+        <div className={style.listFilter}>
+          {brewery.length === 0 ? null : (
+            <ListFilter
+              setBreweryType={setBreweryType}
+              breweryType={breweryType}
+            />
+          )}
+        </div>
         {showClickedBrewery ? (
           <div className={style.clickedContainer}>
-            <ClickedBeerCard brewery={clickedBrewery} />
+            <ClickedBeerCard
+              brewery={clickedBrewery}
+              addToFavorites={addToFavorites}
+            />
             <Button
               color="red"
               circular
@@ -95,14 +151,13 @@ export default function LocationBrewSearchPage() {
             />{" "}
           </div>
         ) : null}
-
         <div className="map-wrapper" style={{ margin: 0, padding: 0 }}>
           <LocationBrewMap
             setSelectedBrew={setSelectedBrew}
             selectedBrew={selectedBrew}
             setClickedBrewery={setClickedBrewery}
             setShowClickedBrewery={setShowClickedBrewery}
-            brewery={brewery}
+            brewery={brewFilter(brewery)}
             setViewport={setViewport}
             viewport={viewport}
           />{" "}
@@ -114,7 +169,7 @@ export default function LocationBrewSearchPage() {
         only="computer tablet"
       >
         <LocationBrewList
-          brewery={brewery}
+          brewery={brewFilter(brewery)}
           handleBreweryListClick={handleBreweryListClick}
         />
         <GetUserLocation setLocation={setLocation} setViewport={setViewport} />

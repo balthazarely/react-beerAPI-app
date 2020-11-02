@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react";
-import Search from "./BeerMap/Search";
 import LocationBrewSearchPage from "./LocationBeerSearch/LocationBrewSearchPage";
 import MyFavorites from "./Favorites/MyFavorites";
 import NavBar from "./Navbar";
-import FilterPanel from "./Favorites/FilterPanel";
-import About from "./About";
 import SingleBeerPage from "./SingleBeerPage/SingleBeerPage";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import SingleBrewSearchPage from "./SingleBrewSearch/SingleBrewSearchPage";
@@ -139,9 +136,7 @@ export default function MainLayout() {
               handleFilterInput={handleFilterInput}
             />
           </Route>
-          <Route exact path="/about">
-            <About />
-          </Route>
+          <Route exact path="/about"></Route>
           <Route
             exact
             path={["/brewery/:id"]}

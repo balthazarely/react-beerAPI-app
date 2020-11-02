@@ -9,18 +9,9 @@ export default function Nav({ setFormOpen }) {
         <Icon name="beer" />
         CitySearch
       </Menu.Item>
-      <Menu.Item
-        name="gamepad"
-        header
-        as={NavLink}
-        exact
-        to="/singleBrewSearch"
-      >
-        <Icon name="gamepad" />
-        Brewery
-      </Menu.Item>
+
       <Menu.Item name="gamepad" header as={NavLink} exact to="/favorites">
-        <Icon name="gamepad" />
+        <Icon name="like" />
         Favorites
       </Menu.Item>
     </Menu>

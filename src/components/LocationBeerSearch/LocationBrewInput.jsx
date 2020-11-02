@@ -4,10 +4,25 @@ import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng,
 } from "react-places-autocomplete";
+import RadioToggle from "./FormComponents/RadioToggle";
 import Axios from "axios";
 
-export default function LocationBrewInput({ setLocation, setViewport }) {
+const inputStyle = {
+  display: "flex",
+  flexDirection: "row",
+};
+
+export default function LocationBrewInput({
+  setLocation,
+  setViewport,
+  handleNameSearched,
+  serachByCity,
+  setSearchByCity,
+  setGeolocationLoading,
+  geolocationLoading,
+}) {
   const [address, setAddress] = useState("");
+  // This goes down to the checkbox input component
 
   const handleSelect = async (value) => {
     const results = await geocodeByAddress(value);
@@ -30,6 +45,8 @@ export default function LocationBrewInput({ setLocation, setViewport }) {
 
   const locatorButtonPressed = () => {
     if (navigator.geolocation) {
+      setGeolocationLoading(true);
+      setSearchByCity(true);
       navigator.geolocation.getCurrentPosition(
         (position) => {
           getAddressFrom(position.coords.latitude, position.coords.longitude);
@@ -58,6 +75,7 @@ export default function LocationBrewInput({ setLocation, setViewport }) {
             if (response.data.error_message) {
               this.error = response.data.error_message;
               console.log(response.data.error_message);
+              setGeolocationLoading(false);
             } else {
               setLocation({
                 city: response.data.results[0].address_components[3].long_name,
@@ -65,13 +83,15 @@ export default function LocationBrewInput({ setLocation, setViewport }) {
               });
               setAddress(
                 response.data.results[0].address_components[3].long_name +
-                  "," +
+                  ", " +
                   response.data.results[0].address_components[5].long_name
               );
+              setGeolocationLoading(false);
             }
           })
           .catch((error) => {
             console.log(error.message);
+            setGeolocationLoading(false);
           });
       };
     } else {
@@ -81,55 +101,86 @@ export default function LocationBrewInput({ setLocation, setViewport }) {
 
   return (
     <div>
-      <PlacesAutocomplete
-        value={address}
-        onChange={setAddress}
-        onSelect={handleSelect}
-        searchOptions={{ types: ["(cities)"] }}
-      >
-        {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-          <div>
+      <div style={inputStyle}>
+        <div>
+          {serachByCity ? (
+            <PlacesAutocomplete
+              value={address}
+              onChange={setAddress}
+              onSelect={handleSelect}
+              searchOptions={{ types: ["(cities)"] }}
+            >
+              {({
+                getInputProps,
+                suggestions,
+                getSuggestionItemProps,
+                loading,
+              }) => (
+                <div>
+                  <div>
+                    <Input
+                      variant="outlined"
+                      placeholder="search city"
+                      size="large"
+                      {...getInputProps({})}
+                    />
+                    <Button
+                      loading={geolocationLoading ? true : false}
+                      icon
+                      size="large"
+                      onClick={locatorButtonPressed}
+                    >
+                      <Icon name="world" />
+                    </Button>
+                    <div id="error"></div>
+                  </div>
+                  <div>
+                    {suggestions.map((suggestion, i) => {
+                      const style = {
+                        backgroundColor: suggestion.active ? "#41b6e6" : "#fff",
+                      };
+                      return (
+                        <div
+                          style={{
+                            backgroundColor: "white",
+                            position: "absolute",
+                            top: "0px",
+                            zIndex: "100",
+                            margin: "10px",
+                            padding: "10px",
+                          }}
+                          key={i}
+                          {...getSuggestionItemProps(suggestion, { style })}
+                        >
+                          {suggestion.description}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+            </PlacesAutocomplete>
+          ) : (
             <div>
               <Input
                 variant="outlined"
-                placeholder="search city"
+                placeholder="search for brewery"
                 size="large"
-                {...getInputProps({})}
-              />
-
-              {/* <Button onClick={handleSearch}>Search</Button> */}
-              <Button icon size="large" onClick={locatorButtonPressed}>
+                onChange={(e) => handleNameSearched(e)}
+              />{" "}
+              <Button
+                loading={geolocationLoading ? true : false}
+                icon
+                size="large"
+                onClick={locatorButtonPressed}
+              >
                 <Icon name="world" />
-              </Button>
-
-              <div id="error"></div>
+              </Button>{" "}
             </div>
-            <div>
-              {suggestions.map((suggestion, i) => {
-                const style = {
-                  backgroundColor: suggestion.active ? "#41b6e6" : "#fff",
-                };
-                return (
-                  <div
-                    style={{
-                      backgroundColor: "white",
-                      position: "absolute",
-                      top: "0px",
-                      zIndex: "100",
-                      margin: "10px",
-                      padding: "10px",
-                    }}
-                    key={i}
-                    {...getSuggestionItemProps(suggestion, { style })}
-                  >
-                    {suggestion.description}
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        )}
-      </PlacesAutocomplete>
+          )}{" "}
+        </div>
+      </div>
+      <RadioToggle setSearchByCity={setSearchByCity} />
     </div>
   );
 }
