@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Segment, Image, Item, Header, Button } from "semantic-ui-react";
 
 const eventImageStyle = {
@@ -7,11 +8,7 @@ const eventImageStyle = {
 
 const eventImageTextStyle = {
   position: "absolute",
-  bottom: "5%",
-  left: "5%",
-  width: "100%",
-  height: "100px",
-  color: "white",
+  bottom: 0,
 };
 
 export default function SingleBeerPageHeader({ brewery }) {
@@ -20,10 +17,11 @@ export default function SingleBeerPageHeader({ brewery }) {
       <Segment
         basic
         attached="top"
-        style={{ padding: "0", height: "200px", overflow: "hidden" }}
+        style={{ padding: "0", position: "relative" }}
       >
-        <Image src={`/drinks.jpg`} fluid style={eventImageStyle} />
-
+        <div style={{ maxHeight: "300px", overflow: "hidden" }}>
+          <Image src={`/drinks.jpg`} fluid style={eventImageStyle} />
+        </div>
         <Segment basic style={eventImageTextStyle}>
           <Item.Group>
             <Item>
@@ -33,9 +31,6 @@ export default function SingleBeerPageHeader({ brewery }) {
                   content={brewery.name}
                   style={{ color: "white" }}
                 />
-                <p>
-                  {brewery.city}, {brewery.state}
-                </p>
               </Item.Content>
             </Item>
           </Item.Group>
@@ -43,8 +38,10 @@ export default function SingleBeerPageHeader({ brewery }) {
       </Segment>
 
       <Segment attached="bottom">
-        <Button>Cancel My Place</Button>
-        <Button color="teal">JOIN THIS EVENT</Button>
+        <Button color="orange">Add to Favorites</Button>
+        <Button as={Link} to={`/`}>
+          Back to Map
+        </Button>
       </Segment>
     </Segment.Group>
   );

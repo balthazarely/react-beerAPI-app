@@ -6,7 +6,8 @@ import GetUserLocation from "./GetUserLocation";
 import ClickedBeerCard from "./ClickedBeerCard";
 import Modal from "./Modal";
 import ListFilter from "./FormComponents/ListFilter";
-import { Loader, Grid, Button, Transition } from "semantic-ui-react";
+import NightModeBtn from "./FormComponents/NightModeBtn";
+import { Loader, Grid, Button } from "semantic-ui-react";
 import Axios from "axios";
 import { convertToNum } from "../Utility/_utility";
 import style from "./LocationBrewSearchPage.module.css";
@@ -41,6 +42,8 @@ export default function LocationBrewSearchPage({ addToFavorites }) {
   const [geolocationLoading, setGeolocationLoading] = useState(false);
   // Open Modal
   const [openModal, setOpenModal] = useState(false);
+  // Set night mode
+  const [mapNightMode, setMapNightMode] = useState(true);
 
   const handleAPIFetch = () => {
     let url = `https://api.openbrewerydb.org/breweries?by_city=${location.city}&per_page=50&by_state=${location.state}`;
@@ -69,6 +72,7 @@ export default function LocationBrewSearchPage({ addToFavorites }) {
       height: "100%",
       zoom: 3,
     };
+
     setViewport(resetView);
   };
 
@@ -156,6 +160,12 @@ export default function LocationBrewSearchPage({ addToFavorites }) {
             </div>
           </div>
         )}
+        <div className={style.nightModeBtn}>
+          <NightModeBtn
+            setMapNightMode={setMapNightMode}
+            mapNightMode={mapNightMode}
+          />
+        </div>
 
         {showClickedBrewery ? (
           <div className={style.clickedContainer}>
@@ -182,6 +192,7 @@ export default function LocationBrewSearchPage({ addToFavorites }) {
             brewery={brewFilter(brewery)}
             setViewport={setViewport}
             viewport={viewport}
+            mapNightMode={mapNightMode}
           />{" "}
         </div>
       </Grid.Column>

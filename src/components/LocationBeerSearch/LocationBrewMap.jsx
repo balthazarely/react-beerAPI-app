@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { convertToNum } from "../Utility/_utility";
 import ReactMapGL, { Marker, Popup } from "react-map-gl";
 
@@ -10,9 +10,8 @@ export default function LocationBrewMap({
   selectedBrew,
   setClickedBrewery,
   setShowClickedBrewery,
+  mapNightMode,
 }) {
-  // const [selectedBrew, setSelectedBrew] = useState("");
-
   return (
     <div
       className="map-wrapper"
@@ -26,7 +25,11 @@ export default function LocationBrewMap({
       <ReactMapGL
         {...viewport}
         mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
-        mapStyle="mapbox://styles/balthazarely/ckg8fukiq14tk19mxrkt19zgv"
+        mapStyle={
+          mapNightMode
+            ? "mapbox://styles/balthazarely/ckg8fukiq14tk19mxrkt19zgv"
+            : "mapbox://styles/balthazarely/ckh409qk301go19mugfre5ivl"
+        }
         onViewportChange={(viewport) => {
           setViewport(viewport);
         }}

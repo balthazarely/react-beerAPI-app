@@ -20,10 +20,15 @@ const ClickedBeerCard = ({ brewery, addToFavorites }) => (
     </Card.Content>
     <Card.Content extra>
       <div className="ui two buttons">
-        <Button basic color="green" as={Link} to={`/brewery/${brewery.id}`}>
+        <Button
+          size="small"
+          color="orange"
+          as={Link}
+          to={`/brewery/${brewery.id}`}
+        >
           View Location
         </Button>
-        <Button basic color="red" onClick={() => addToFavorites(brewery)}>
+        <Button basic color="orange" onClick={() => addToFavorites(brewery)}>
           Favorite
         </Button>
       </div>
