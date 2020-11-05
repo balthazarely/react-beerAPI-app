@@ -2,12 +2,16 @@ import React from "react";
 import { Card, Button, Icon, Grid } from "semantic-ui-react";
 import style from "./MyFavoritesListCard.module.css";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { deleteFavorite } from "../actions";
 
 export default function MyFavoritesListCard({
   favorite,
   removeFavorite,
   clickedCard,
 }) {
+  const dispatch = useDispatch();
+
   return (
     <Grid.Column>
       <Card.Group>
@@ -36,7 +40,8 @@ export default function MyFavoritesListCard({
               className={style.delBtn}
               color="red"
               icon
-              onClick={() => removeFavorite(favorite.id)}
+              // onClick={() => removeFavorite(favorite.id)}
+              onClick={() => dispatch(deleteFavorite(favorite.id))}
             >
               <Icon name="trash" />
             </Button>

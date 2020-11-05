@@ -6,19 +6,22 @@ import SingleBeerPage from "./SingleBeerPage/SingleBeerPage";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { filterExcludeColumns } from "./Utility/_filterExcludeColumns";
 import { data } from "./API/Data";
+import Sandbox from "../sandbox/Sandbox";
+import { useSelector } from "react-redux";
 
 export default function MainLayout() {
-  const [favorites, setFavorites] = useState(data);
+  // const [favorites, setFavorites] = useState(data);
+  const { favorites } = useSelector((state) => state.favorite);
   const [searchTerm, setSearchTerm] = useState("");
 
   // Basic CRUD Stuff
   const addToFavorites = (obj) => {
     console.log(obj);
-    setFavorites([...favorites, obj]);
+    // setFavorites([...favorites, obj]);
   };
 
   const removeFavorite = (itemId) => {
-    setFavorites(favorites.filter(({ id }) => id !== itemId));
+    // setFavorites(favorites.filter(({ id }) => id !== itemId));
   };
 
   // Filter Section
@@ -47,7 +50,9 @@ export default function MainLayout() {
               removeFavorite={removeFavorite}
             />
           </Route>
-          <Route exact path="/about"></Route>
+          <Route exact path="/sandbox">
+            <Sandbox />
+          </Route>
           <Route
             exact
             path={["/brewery/:id"]}
