@@ -1,9 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { Grid, Container, Card } from "semantic-ui-react";
+import { Grid, Container, Card, Button } from "semantic-ui-react";
 import FilterPanel from "./FilterPanel";
 import MyFavoriteMap from "./MyFavoriteMap";
 import MyFavoritesList from "./MyFavoritesList";
 import { convertToNum } from "../Utility/_utility";
+
+const buttonContainer = {
+  display: "flex",
+  justifyContent: "space-around",
+  margin: "0 150px",
+  marginTop: "10px",
+};
 
 export default function MyFavoritesPage({
   favorites,
@@ -15,7 +22,7 @@ export default function MyFavoritesPage({
     longitude: -95.7129,
     width: "100%",
     height: "100%",
-    zoom: 1.75,
+    zoom: 2,
   });
 
   const clickedCard = (brewery) => {
@@ -45,7 +52,7 @@ export default function MyFavoritesPage({
         longitude: -95.7129,
         width: "100%",
         height: "100%",
-        zoom: 1.75,
+        zoom: 2,
       });
   }, [favorites]);
 
@@ -59,6 +66,16 @@ export default function MyFavoritesPage({
               viewport={viewport}
               setViewPort={setViewPort}
             />
+            <div style={buttonContainer}>
+              <Button circular icon="beer" size="large" />
+              <Button circular icon="home" size="large" />
+              <Button circular icon="building" size="large" />
+            </div>
+            <div style={buttonContainer}>
+              <p>Mirco</p>
+              <p>Brewpub</p>
+              <p>Large</p>
+            </div>
           </Card>
         </Grid.Column>
         <Grid.Column width={8}>
@@ -68,6 +85,11 @@ export default function MyFavoritesPage({
             removeFavorite={removeFavorite}
             clickedCard={clickedCard}
           />
+          {favorites.length === 0 ? (
+            <div style={{ textAlign: "center" }}>
+              <h4>You haven't saved any favorites yet</h4>
+            </div>
+          ) : null}
         </Grid.Column>
       </Grid>
     </Container>

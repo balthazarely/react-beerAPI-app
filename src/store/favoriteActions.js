@@ -1,4 +1,4 @@
-import { CREATE_FAVORITE, DELETE_FAVORITE } from "./constants";
+import { CREATE_FAVORITE, DELETE_FAVORITE } from "./FavoriteConstants";
 
 export function createFavorite(favorite) {
   return {

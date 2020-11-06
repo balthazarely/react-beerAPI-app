@@ -11,6 +11,7 @@ import { Loader, Grid, Button } from "semantic-ui-react";
 import Axios from "axios";
 import { convertToNum } from "../Utility/_utility";
 import style from "./LocationBrewSearchPage.module.css";
+import { useSelector } from "react-redux";
 
 const loaderStyle = {
   position: "absolute",
@@ -49,6 +50,7 @@ export default function LocationBrewSearchPage({ addToFavorites }) {
     let url = `https://api.openbrewerydb.org/breweries?by_city=${location.city}&per_page=50&by_state=${location.state}`;
     Axios.get(url).then((res) => {
       setBewery(res.data);
+      console.log(res.data);
       setShowClickedBrewery(false);
     });
   };

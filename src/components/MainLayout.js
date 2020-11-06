@@ -11,7 +11,9 @@ import { useSelector } from "react-redux";
 
 export default function MainLayout() {
   // const [favorites, setFavorites] = useState(data);
+
   const { favorites } = useSelector((state) => state.favorite);
+
   const [searchTerm, setSearchTerm] = useState("");
 
   // Basic CRUD Stuff

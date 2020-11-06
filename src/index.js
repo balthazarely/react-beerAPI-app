@@ -1,15 +1,18 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import "semantic-ui-css/semantic.min.css";
+import "react-toastify/dist/ReactToastify.min.css";
 import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
-import "semantic-ui-css/semantic.min.css";
 import { Provider } from "react-redux";
 import { configureStore } from "./store/configureStore";
+// import { loadFavorites } from "./components/actions";
 
 const store = configureStore();
 
-console.log(store.getState());
+// store.dispatch(loadFavorites);
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>

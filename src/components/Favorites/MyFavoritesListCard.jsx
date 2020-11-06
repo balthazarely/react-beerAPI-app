@@ -3,11 +3,11 @@ import { Card, Button, Icon, Grid } from "semantic-ui-react";
 import style from "./MyFavoritesListCard.module.css";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { deleteFavorite } from "../actions";
+import { deleteFavorite } from "../../store/favoriteActions";
 
 export default function MyFavoritesListCard({
   favorite,
-  removeFavorite,
+  // removeFavorite,
   clickedCard,
 }) {
   const dispatch = useDispatch();

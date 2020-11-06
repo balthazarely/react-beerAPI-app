@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Segment, Image, Item, Header, Button } from "semantic-ui-react";
+import { useDispatch } from "react-redux";
+import { createFavorite, deleteFavorite } from "../../store/favoriteActions";
 
 const eventImageStyle = {
   filter: "brightness(30%)",
@@ -11,7 +13,9 @@ const eventImageTextStyle = {
   bottom: 0,
 };
 
-export default function SingleBeerPageHeader({ brewery }) {
+export default function SingleBeerPageHeader({ brewery, isAlreadyAFavorite }) {
+  const dispatch = useDispatch();
+
   return (
     <Segment.Group>
       <Segment
@@ -38,7 +42,22 @@ export default function SingleBeerPageHeader({ brewery }) {
       </Segment>
 
       <Segment attached="bottom">
-        <Button color="orange">Add to Favorites</Button>
+        {isAlreadyAFavorite ? (
+          <Button
+            color="orange"
+            onClick={() => dispatch(deleteFavorite(brewery.id))}
+          >
+            Remove from Favorites
+          </Button>
+        ) : (
+          <Button
+            color="orange"
+            onClick={() => dispatch(createFavorite(brewery))}
+          >
+            Add to Favorites
+          </Button>
+        )}
+
         <Button as={Link} to={`/`}>
           Back to Map
         </Button>

@@ -1,6 +1,14 @@
 import React, { useState } from "react";
 import ReactMapGL, { Marker, Popup } from "react-map-gl";
 import { convertToNum } from "../Utility/_utility";
+import { Button } from "semantic-ui-react";
+
+const resetBtn = {
+  position: "absolute",
+  bottom: 0,
+  left: 0,
+  zIndex: 300,
+};
 
 export default function FavoriteMap({ favorites, viewport, setViewPort }) {
   const [selectedBrew, setSelectedBrew] = useState("");
@@ -9,6 +17,21 @@ export default function FavoriteMap({ favorites, viewport, setViewPort }) {
       className="map-wrapper"
       style={{ position: "relative", height: "400px" }}
     >
+      <Button
+        style={resetBtn}
+        compact
+        onClick={() =>
+          setViewPort({
+            latitude: 37.0902,
+            longitude: -95.7129,
+            width: "100%",
+            height: "100%",
+            zoom: 2,
+          })
+        }
+      >
+        Reset View
+      </Button>
       <ReactMapGL
         {...viewport}
         mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}

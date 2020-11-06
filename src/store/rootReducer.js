@@ -1,10 +1,10 @@
 import { combineReducers } from "redux";
-import favoritesReducer from "../components/favoriteReducer";
-import testReducer from "../sandbox/testReducer";
+import favoriteReducer from "./favoriteReducer";
+import testReducer from "./testReducer";
 
 const rootReducer = combineReducers({
   test: testReducer,
-  favorite: favoritesReducer,
+  favorite: favoriteReducer,
 });
 
 export default rootReducer;

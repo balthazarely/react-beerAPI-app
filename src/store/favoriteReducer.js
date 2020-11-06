@@ -1,11 +1,11 @@
-import { data } from "./API/Data";
-import { CREATE_FAVORITE, DELETE_FAVORITE } from "./constants";
+import { data } from "../components/API/Data";
+import { CREATE_FAVORITE, DELETE_FAVORITE } from "./FavoriteConstants";
 
 const initialState = {
   favorites: data,
 };
 
-export default function favoritesReducer(
+export default function favoriteReducer(
   state = initialState,
   { type, payload }
 ) {

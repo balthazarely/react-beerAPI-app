@@ -5,49 +5,35 @@ import SingleBeerMap from "./SingleBeerMap";
 import SingleBeerInfo from "./SingleBeerInfo";
 import Axios from "axios";
 import { convertToNum } from "../Utility/_utility";
+import { useSelector } from "react-redux";
 
 export default function SingleBeerPage({ match }) {
   const [brewery, setBrewery] = useState({});
-
-  // const [viewport, setViewPort] = useState({
-  //   latitude: 37.0902,
-  //   longitude: -95.7129,
-  //   width: "100%",
-  //   height: "100%",
-  //   zoom: 1.75,
-  // });
+  const [isAlreadyAFavorite, setIsAlreadyAFavorite] = useState();
+  const { favorites } = useSelector((state) => state.favorite);
 
   useEffect(() => {
     let url = `https://api.openbrewerydb.org/breweries/${match.params.id}`;
     Axios.get(url).then((res) => {
       setBrewery(res.data);
-      // handleBreweryListClick(res.data);
     });
   }, [match]);
 
-  // const handleBreweryListClick = (brewery) => {
-  //   if (
-  //     isNaN(convertToNum(brewery.latitude)) ||
-  //     isNaN(convertToNum(brewery.longitude))
-  //   ) {
-  //     return;
-  //   } else {
-  //     let newViewport = {
-  //       latitude: convertToNum(brewery.latitude),
-  //       longitude: convertToNum(brewery.longitude),
-  //       width: "100%",
-  //       height: "100%",
-  //       zoom: 14,
-  //     };
-  //     setViewPort(newViewport);
-  //   }
-  // };
+  useEffect(() => {
+    const even = (element) => element.id === Number(match.params.id);
+    favorites.some(even)
+      ? setIsAlreadyAFavorite(true)
+      : setIsAlreadyAFavorite(false);
+  });
 
   return (
     <Container style={{ marginTop: "20px" }}>
       <Grid>
         <Grid.Column width={16}>
-          <SingleBeerPageHeader brewery={brewery} />
+          <SingleBeerPageHeader
+            brewery={brewery}
+            isAlreadyAFavorite={isAlreadyAFavorite}
+          />
           <SingleBeerInfo brewery={brewery} />
           {/* <EventDetailedInfo event={event} />
         <EventDetailedChat /> */}

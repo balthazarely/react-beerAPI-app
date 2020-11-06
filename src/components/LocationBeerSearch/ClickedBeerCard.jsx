@@ -1,12 +1,22 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Card, Image, Button } from "semantic-ui-react";
 import { formatPhoneNumber } from "../Utility/_utility";
 import { Link } from "react-router-dom";
-import { createFavorite } from "../actions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { createFavorite, deleteFavorite } from "../../store/favoriteActions";
 
 export default function ClickedBeerCard({ brewery, addToFavorites }) {
   const dispatch = useDispatch();
+
+  const [isAlreadyAFavorite, setIsAlreadyAFavorite] = useState();
+  const { favorites } = useSelector((state) => state.favorite);
+
+  useEffect(() => {
+    const even = (element) => element.id === Number(brewery.id);
+    favorites.some(even)
+      ? setIsAlreadyAFavorite(true)
+      : setIsAlreadyAFavorite(false);
+  });
 
   return (
     <Card>
@@ -25,22 +35,26 @@ export default function ClickedBeerCard({ brewery, addToFavorites }) {
       </Card.Content>
       <Card.Content extra>
         <div className="ui two buttons">
-          <Button
-            size="small"
-            color="orange"
-            as={Link}
-            to={`/brewery/${brewery.id}`}
-          >
+          <Button size="small" as={Link} to={`/brewery/${brewery.id}`}>
             View Location
           </Button>
-          <Button
-            basic
-            color="orange"
-            // onClick={() => addToFavorites(brewery)}
-            onClick={() => dispatch(createFavorite(brewery))}
-          >
-            Favorite
-          </Button>
+          {isAlreadyAFavorite ? (
+            <Button
+              color="olive"
+              size="mini"
+              onClick={() => dispatch(deleteFavorite(brewery.id))}
+            >
+              Remove from Favorites
+            </Button>
+          ) : (
+            <Button
+              color="orange"
+              size="mini"
+              onClick={() => dispatch(createFavorite(brewery))}
+            >
+              Add to Favorites
+            </Button>
+          )}
         </div>
       </Card.Content>
     </Card>
